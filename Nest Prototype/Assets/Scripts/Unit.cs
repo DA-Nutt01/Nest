@@ -16,12 +16,6 @@ public class Unit : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Move(Vector3 point)
     {
         agent.SetDestination(point);

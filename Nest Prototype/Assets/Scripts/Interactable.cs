@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // The min distance a unit needs to be to interact with this 
+    public float interactionRadius = 2.5f;
+
+    void OnDrawGizmosSelected () 
     {
-        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interactionRadius);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

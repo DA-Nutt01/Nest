@@ -423,9 +423,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 10, z: -10}
-  zoomSpeed: 6
-  minZoom: 3
-  maxZoom: 20
+  currentZoom: 1
+  zoomSpeed: 5
+  minZoom: 0.5
+  maxZoom: 1.5
   smoothTime: 0.3
   maxSpeed: 10
 --- !u!1 &410087039
@@ -557,6 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 10, z: -1}
+  currentZoom: 10
   zoomSpeed: 4
   minZoom: 5
   maxZoom: 15
@@ -641,7 +643,7 @@ PrefabInstance:
     - target: {fileID: 3049741690211191909, guid: fc646b51f81db7349b7624ed1d82b7af,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.18
       objectReference: {fileID: 0}
     - target: {fileID: 3049741690211191909, guid: fc646b51f81db7349b7624ed1d82b7af,
         type: 3}
@@ -700,7 +702,7 @@ PrefabInstance:
     - target: {fileID: 3049741690211191909, guid: fc646b51f81db7349b7624ed1d82b7af,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.33
       objectReference: {fileID: 0}
     - target: {fileID: 3049741690211191909, guid: fc646b51f81db7349b7624ed1d82b7af,
         type: 3}
@@ -710,7 +712,7 @@ PrefabInstance:
     - target: {fileID: 3049741690211191909, guid: fc646b51f81db7349b7624ed1d82b7af,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.02
       objectReference: {fileID: 0}
     - target: {fileID: 3049741690211191909, guid: fc646b51f81db7349b7624ed1d82b7af,
         type: 3}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Vector3 offset;
-    private float currentZoom = 10.0f;
+    public float currentZoom = 10.0f;
     public float zoomSpeed = 4.0f;
     public float minZoom = 5.0f;
     public float maxZoom = 15.0f;
@@ -16,18 +16,15 @@ public class CameraController : MonoBehaviour
     private Quaternion currentRotation;
     private Vector3 currentVelocity;
 
-    void Update()
-    {
-        currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed; 
-        currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-    }
-
     public IEnumerator FollowTarget(Interactable target)
     {   
         yield return null;
 
         while(true)
         {
+            currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed; 
+            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
+
             // Get the desired rotation to look at the target
             Vector3 directionToTarget = target.transform.position - transform.position;
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
@@ -39,7 +36,7 @@ public class CameraController : MonoBehaviour
             transform.rotation = currentRotation;  
 
             // Calculate the target position to move towards
-            Vector3 targetPosition = target.transform.position + offset;
+            Vector3 targetPosition = target.transform.position + offset * currentZoom;
 
             // Smoothly move the camera towards the target position using Vector3.SmoothDamp
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime, maxSpeed);
