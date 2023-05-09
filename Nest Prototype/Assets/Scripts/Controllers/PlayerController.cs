@@ -14,11 +14,14 @@ public class PlayerController : MonoBehaviour
     public ControlState controlState;
     // Ref to the currentle selected unit if there is one
     private Unit selectedUnit;
+    // Ref to the main camera
+    Camera cam;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        cam = Camera.main;
         controlState = ControlState.defocused;
     }
 
@@ -35,7 +38,7 @@ public class PlayerController : MonoBehaviour
                     RaycastHit hit;  
 
                     // Create a ray from the camera to the mouse position
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
 
                     // If the ray hit an object on the interatable layer...
                     if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
@@ -61,7 +64,7 @@ public class PlayerController : MonoBehaviour
                     RaycastHit hit;  
 
                     // Create a ray from the camera to the mouse position
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
                     // If the ray hit anything on the movement layer, such as the ground...
                     if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
@@ -85,16 +88,16 @@ public class PlayerController : MonoBehaviour
         switch (interactable.GetComponent<Unit>())
         {
             case null: // Interactable is not a unit
-                Debug.Log("Interactable is not a unit, Selected" + interactable.gameObject.name);
                 // Set current focus to this interactable
                 focus = interactable;
                 break;
             default: // Interactable is a unit
-                Debug.Log("Interactable is a unit, Selected " + interactable.gameObject.name);
                 // Set current focus to this interactable
                 focus = interactable;
                 // Grab ref to Unit component to access this unit's functions
                 selectedUnit = interactable.GetComponent<Unit>();
+                // Set unit as the camera's target to follow
+                cam.GetComponent<CameraController>().StartFollow(focus);
                 break;
         }
     }
@@ -105,8 +108,9 @@ public class PlayerController : MonoBehaviour
         if(focus != null) 
         {
             focus = null;
-            controlState = ControlState.defocused;
             selectedUnit = null;
+            controlState = ControlState.defocused;
+            cam.GetComponent<CameraController>().StopFollow();
             Debug.Log("Defocusing");
         }
     }
