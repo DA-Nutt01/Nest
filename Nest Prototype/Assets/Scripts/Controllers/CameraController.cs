@@ -3,59 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
-{
-    public Vector3 offset;
-    public float currentZoom = 10.0f;
-    public float zoomSpeed = 4.0f;
-    public float minZoom = 5.0f;
-    public float maxZoom = 15.0f;
-    private Coroutine followCoroutine;
+{   
+    // The speed the cam pans around the scene
+    public float panSpeed = 20.0f;
+    // How close the mouse must be to the border of the screen to pan the camera that way
+    public float panBorderThickness = 10.0f;
+    // Limit of how far on the x & z the cam can move in the word
+    public Vector2 panLimit;
+    // 
+    public float scrollSpeed = 20.0f;
+    public float minYPos = 20.0f;
+    public float maxYPos = 120.0f;
 
-    public float smoothTime = 0.3f;
-    public float maxSpeed = 10f;
-    private Quaternion currentRotation;
-    private Vector3 currentVelocity;
+    void Update()
+    {
+        // Cache current pos of the cam
+        Vector3 pos = transform.position;
 
-    public IEnumerator FollowTarget(Interactable target)
-    {   
-        yield return null;
-
-        while(true)
+        // Forward Movement
+        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorderThickness)
         {
-            currentZoom -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed; 
-            currentZoom = Mathf.Clamp(currentZoom, minZoom, maxZoom);
-
-            // Get the desired rotation to look at the target
-            Vector3 directionToTarget = target.transform.position - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, Vector3.up);
-
-            // Smoothly interpolate towards the desired rotation using Quaternion.Slerp
-            currentRotation = Quaternion.Slerp(currentRotation, targetRotation, smoothTime * Time.deltaTime * maxSpeed);
-
-            // Apply the rotation to the transform using Transform.rotation
-            transform.rotation = currentRotation;  
-
-            // Calculate the target position to move towards
-            Vector3 targetPosition = target.transform.position + offset * currentZoom;
-
-            // Smoothly move the camera towards the target position using Vector3.SmoothDamp
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime, maxSpeed);
-            yield return null;
+            pos.z += panSpeed * Time.deltaTime;
         }
 
-    }
-
-    public void StartFollow(Interactable target)
-    {
-        followCoroutine = StartCoroutine(FollowTarget(target));
-    }
-
-    // Public method to stop the coroutine
-    public void StopFollow()
-    {
-        if (followCoroutine != null)
+        // Left Movement
+        if (Input.GetKey("a") || Input.mousePosition.x <= panBorderThickness)
         {
-            StopAllCoroutines();
+            pos.x -= panSpeed * Time.deltaTime;
         }
+
+        // Backward Movement
+        if (Input.GetKey("s") || Input.mousePosition.y <=panBorderThickness)
+        {
+            pos.z -= panSpeed * Time.deltaTime;
+        }
+
+        // Right Movement
+        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorderThickness)
+        {
+            pos.x += panSpeed * Time.deltaTime;
+        }
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        pos.y -= scroll * scrollSpeed * 100f * Time.deltaTime;
+
+        // Clamp the cam's movement within range of the panLimit 
+        pos.x = Mathf.Clamp(pos.x, -panLimit.x, panLimit.x);
+        pos.y = Mathf.Clamp(pos.y, minYPos, maxYPos);
+        pos.z = Mathf.Clamp(pos.z, -panLimit.y, panLimit.y);
+
+        transform.position = pos;
     }
 }
