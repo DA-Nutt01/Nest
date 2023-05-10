@@ -5,128 +5,162 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Global Variables
-    // A mask to distinguish interactable objects from non interactable ones
     public LayerMask interactableLayer;
     public LayerMask movementLayer;
-    // The current interactable the player has selected 
-    public Interactable focus;
-    // The current control state for the controller to differentiate when the controls need to change in each state of gameplay
-    public ControlState controlState;
-    // Ref to the currentle selected unit if there is one
-    private Unit selectedUnit;
-    // Ref to the main camera
     Camera cam;
+
+    //Box Selector Variables
+    [SerializeField]
+    private RectTransform boxVisual;
+
+    private Rect selectionBox;
+    private Vector2 boxStartPosition;
+    private Vector2 boxEndPosition;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
-        controlState = ControlState.defocused;
+        boxStartPosition = Vector2.zero;
+        boxEndPosition = Vector2.zero;
+        DrawVisual();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        switch(controlState)
+        // When left mouse clicked
+        if (Input.GetMouseButtonDown(0))
         {
-            case ControlState.defocused:
-                if(Input.GetMouseButtonDown(0)) // On Left Mouse Click
+            boxStartPosition = Input.mousePosition;
+            selectionBox = new Rect();
+        }
+
+        // While left mouse dragged
+        if (Input.GetMouseButton(0))
+        {
+            boxEndPosition = Input.mousePosition;
+            DrawVisual();
+            DrawSelection();
+        }
+
+        // When left mouse released
+        if (Input.GetMouseButtonUp(0))
+        {
+            SelectUnitsInBox();
+            boxStartPosition = Vector2.zero;
+            boxEndPosition = Vector2.zero;
+            DrawVisual();
+        }
+
+        // Unit Selection
+        if(Input.GetMouseButtonDown(0)) // On Left Mouse Click
+        {
+            // A ref to the object hit by the raycast;
+            RaycastHit hit;  
+
+            // Create a ray from the camera to the mouse position
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
+
+            // If the ray hit an object on the interatable layer...
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
+            {
+                // If the player is holding down shift...
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    // A ref to the object hit by the raycast;
-                    RaycastHit hit;  
-
-                    // Create a ray from the camera to the mouse position
-                    Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
-
-                    // If the ray hit an object on the interatable layer...
-                    if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
-                    {
-                        // Store the Interactable script component off the object that was just hit in a var ref
-                        Interactable interactable = hit.collider.GetComponent<Interactable>();
-
-                        // If the the object we just hit has an Interactable component...
-                        if(interactable != null)
-                        {
-                            // Set the interactable as the focus
-                            SetFocus(interactable);
-                            controlState = ControlState.unitSelected;
-                        }
-                    }
+                    // Add this unit to the selected units
+                    UnitSelectionManager.Instance.ShiftClickSelect(hit.collider.gameObject);
+                } else
+                {
+                    // Remove all over units from selection & add this one
+                    UnitSelectionManager.Instance.ClickSelect(hit.collider.gameObject);
                 }
-                break;
-                
-            case ControlState.unitSelected:
-                if(Input.GetMouseButtonDown(0)) //On Left Mouse Click...
-                    {
-                    // A ref to the object hit by the raycast;
-                    RaycastHit hit;  
 
-                    // Create a ray from the camera to the mouse position
-                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-                    // If the ray hit anything...
-                    if(Physics.Raycast(ray, out hit, 100f))
-                    {
-                        // Grab a ref to the interacable component of the hit if it has one
-                        Interactable interactable = hit.collider.GetComponent<Interactable>();
-
-                        // If the hit is in fact an interactable...
-                        if(interactable != null)
-                        {
-                            // Move to that interactable
-                            selectedUnit.Move(hit.point);
-                            Debug.Log("Moving & Interacting");
-                            // Interact with that interactable
-
-                        } else {
-                            //Move to that position if it is walkable
-                            selectedUnit.Move(hit.point);
-                            Debug.Log("Just Moving");
-                        }
-                    } 
-                }
-                
-                break;
+            } else // If our ray hit nothing...
+            {
+                // If the player is not holding down shift...
+                if (!Input.GetKey(KeyCode.LeftShift))
+                {
+                    // Deselect all units
+                    UnitSelectionManager.Instance.DeselectAll();
+                }   
+                        
+            }
         }
 
-        if(Input.GetMouseButtonDown(1)) // On Right Mouse Click
+        // Unit Movement
+        if (Input.GetMouseButtonDown(1)) // On Right Click...
         {
-            Defocus();
+            RaycastHit hit;  
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
+
+            // If the ray hit an a valid location on the ground...
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
+            {
+                // Loop through every selected unit
+                foreach (GameObject unit in UnitSelectionManager.Instance.selectedUnits)
+                {
+                    unit.GetComponent<Unit>().agent.SetDestination(hit.point);
+                }
+            }
         }
     }
 
-    private void SetFocus(Interactable interactable)
+    // Draws visual box graphic on screen while dragging
+    void DrawVisual()
     {
-        // Checks if the interactable is a Unit or not
-        switch (interactable.GetComponent<Unit>())
+        Vector2 boxStart = boxStartPosition;
+        Vector2 boxEnd = boxEndPosition;
+
+        Vector2 boxCenter = (boxStart + boxEnd) / 2;
+        boxVisual.position = boxCenter;
+
+        Vector2 boxSize = new Vector2(Mathf.Abs(boxStart.x - boxEnd.x), Mathf.Abs(boxStart.y - boxEnd.y));
+
+        boxVisual.sizeDelta = boxSize;
+    }
+
+    void DrawSelection()
+    {
+        // X Calculations
+        if (Input.mousePosition.x < boxStartPosition.x)
         {
-            case null: // Interactable is not a unit
-                // Set current focus to this interactable
-                focus = interactable;
-                break;
-            default: // Interactable is a unit
-                // Set current focus to this interactable
-                focus = interactable;
-                // Grab ref to Unit component to access this unit's functions
-                selectedUnit = interactable.GetComponent<Unit>();
-                // Set unit as the camera's target to follow
-                cam.GetComponent<CameraController>().StartFollow(focus);
-                break;
+            // Player is dragging box left; must invert x
+            selectionBox.xMin = Input.mousePosition.x;
+            selectionBox.xMax = boxStartPosition.x;
+        } else
+        {
+            // Player is dragging box right
+            selectionBox.xMin = boxStartPosition.x;
+            selectionBox.xMax = Input.mousePosition.x;
+        }
+
+        // Y Calculations
+        if (Input.mousePosition.y < boxStartPosition.y)
+        {
+            // Player is dragging box down
+            selectionBox.yMin = Input.mousePosition.y;
+            selectionBox.yMax = boxStartPosition.y;
+        } else
+        {
+            // Player is dragging box up
+            selectionBox.yMin = boxStartPosition.y;
+            selectionBox.yMax = Input.mousePosition.y;
         }
     }
 
-    private void Defocus()
+    public void SelectUnitsInBox()
     {
-        // We only need to defocus if an interactable is currently being focused on
-        if(focus != null) 
+        // Loop through every unit in the scene
+        foreach (GameObject unit in UnitSelectionManager.Instance.allUnits)
         {
-            focus = null;
-            selectedUnit = null;
-            controlState = ControlState.defocused;
-            cam.GetComponent<CameraController>().StopFollow();
-            Debug.Log("Defocusing");
+            // If the unit is within bounds of the selection box...
+            if (selectionBox.Contains(cam.WorldToScreenPoint(unit.transform.position)))
+            {
+                // Select that unit
+                UnitSelectionManager.Instance.DragSelect(unit);
+            }
         }
     }
 }

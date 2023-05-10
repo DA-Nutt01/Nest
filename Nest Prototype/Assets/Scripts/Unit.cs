@@ -7,15 +7,21 @@ using UnityEngine.AI;
 public class Unit : MonoBehaviour
 {
     #region Global Variables
-    NavMeshAgent agent;
-
-    public Interactable focus;
+    public NavMeshAgent agent;
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Cache a ref to this unit's nav mesh agent component
         agent = GetComponent<NavMeshAgent>();
+        // Add this unit to list of all units in the game
+        UnitSelectionManager.Instance.allUnits.Add(this.gameObject);
+    }
+
+    void OnDestroy() 
+    {
+        // When destroyed, remove this unit from the list of all units
+        UnitSelectionManager.Instance.allUnits.Remove(this.gameObject);
     }
 
     public void Move(Vector3 point)
