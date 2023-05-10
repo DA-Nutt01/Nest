@@ -8,6 +8,8 @@ public class Unit : MonoBehaviour
 {
     #region Global Variables
     NavMeshAgent agent;
+
+    public Interactable focus;
     #endregion
 
     // Start is called before the first frame update

@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     // A mask to distinguish interactable objects from non interactable ones
     public LayerMask interactableLayer;
     public LayerMask movementLayer;
-    // The current interactable the controller has selected 
+    // The current interactable the player has selected 
     public Interactable focus;
     // The current control state for the controller to differentiate when the controls need to change in each state of gameplay
     public ControlState controlState;
@@ -66,13 +66,28 @@ public class PlayerController : MonoBehaviour
                     // Create a ray from the camera to the mouse position
                     Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
-                    // If the ray hit anything on the movement layer, such as the ground...
-                    if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
+                    // If the ray hit anything...
+                    if(Physics.Raycast(ray, out hit, 100f))
                     {
-                        //Move the Unit to that location
-                        selectedUnit.Move(hit.point);
-                    }
+                        // Grab a ref to the interacable component of the hit if it has one
+                        Interactable interactable = hit.collider.GetComponent<Interactable>();
+
+                        // If the hit is in fact an interactable...
+                        if(interactable != null)
+                        {
+                            // Move to that interactable
+                            selectedUnit.Move(hit.point);
+                            Debug.Log("Moving & Interacting");
+                            // Interact with that interactable
+
+                        } else {
+                            //Move to that position if it is walkable
+                            selectedUnit.Move(hit.point);
+                            Debug.Log("Just Moving");
+                        }
+                    } 
                 }
+                
                 break;
         }
 
