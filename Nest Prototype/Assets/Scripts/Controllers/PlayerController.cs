@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     #region Global Variables
     public LayerMask interactableLayer;
     public LayerMask movementLayer;
+    public ControlState controlState = ControlState.defocused;
     Camera cam;
 
     //Box Selector Variables
@@ -71,10 +72,12 @@ public class PlayerController : MonoBehaviour
                 {
                     // Add this unit to the selected units
                     UnitSelectionManager.Instance.ShiftClickSelect(hit.collider.gameObject);
+                    controlState = ControlState.unitsSelected;
                 } else
                 {
                     // Remove all over units from selection & add this one
                     UnitSelectionManager.Instance.ClickSelect(hit.collider.gameObject);
+                    controlState = ControlState.unitsSelected;
                 }
 
             } else // If our ray hit nothing...
@@ -84,25 +87,45 @@ public class PlayerController : MonoBehaviour
                 {
                     // Deselect all units
                     UnitSelectionManager.Instance.DeselectAll();
+                    controlState = ControlState.defocused;
                 }   
                         
             }
         }
 
-        // Unit Movement
-        if (Input.GetMouseButtonDown(1)) // On Right Click...
+        if (controlState == ControlState.unitsSelected)
         {
-            RaycastHit hit;  
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
-
-            // If the ray hit an a valid location on the ground...
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
+                // Unit Movement
+            if (Input.GetMouseButtonDown(1)) // On Right Click...
             {
-                // Loop through every selected unit
-                foreach (GameObject unit in UnitSelectionManager.Instance.selectedUnits)
+                RaycastHit hit;  
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
+
+                // If the ray hit an interactable///
+                if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
                 {
-                    unit.GetComponent<Unit>().agent.SetDestination(hit.point);
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+
+                    // Loop through every selected unit
+                    foreach (GameObject unitObject in UnitSelectionManager.Instance.selectedUnits)
+                    {
+                        Unit unit = unitObject.GetComponent<Unit>();
+            
+                        unit.SetFocus(interactable);
+                        unit.FollowTarget();
+                        
+                    }
                 }
+                else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
+                {
+                    // Loop through every selected unit
+                    foreach (GameObject unit in UnitSelectionManager.Instance.selectedUnits)
+                    {
+                        unit.GetComponent<Unit>().Move(hit.point);
+                        unit.GetComponent<Unit>().Defocus();
+                    }
+                }
+
             }
         }
     }
@@ -160,6 +183,7 @@ public class PlayerController : MonoBehaviour
             {
                 // Select that unit
                 UnitSelectionManager.Instance.DragSelect(unit);
+                controlState = ControlState.unitsSelected;
             }
         }
     }
