@@ -7,8 +7,9 @@ using UnityEngine.AI;
 public class Unit : MonoBehaviour
 {
     #region Global Variables
-    public NavMeshAgent agent;
-    public Interactable focus;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Interactable focus;
+    public bool hasInteractedWFocus = false;
     #endregion
 
     void Start()
@@ -29,17 +30,29 @@ public class Unit : MonoBehaviour
 
     public virtual void SetFocus(Interactable newFocus)
     {
+        // Check if this is already focused on another interactable
+        if (newFocus != focus && focus != null)
+        {
+            focus.OnDefocused(transform);
+        }
+        // Set the interactable as the focus for this
         focus = newFocus;
-        Debug.Log(gameObject.name + " focusing on " + newFocus.GetComponent<Collider>().name);
+        // Notify focus its is selected
+        newFocus.OnFocused(transform);
+        // Start following the focus
         StartCoroutine(FollowTarget());
+        hasInteractedWFocus = false;
+        Debug.Log(gameObject.name + " focusing on " + newFocus.GetComponent<Collider>().name);
     }
 
     public virtual void Defocus()
     {
         if(focus != null)
         {
+            focus.OnDefocused(transform);
             focus = null;
             StopFollowingTarget();
+            hasInteractedWFocus = false;
             Debug.Log(gameObject.name + " Defocusing");
         }
     }
@@ -52,7 +65,9 @@ public class Unit : MonoBehaviour
 
     public virtual IEnumerator FollowTarget()
     {
-        while(true)
+        Debug.Log(gameObject.name + " Following " + focus);
+
+        while (true)
         {
             if(focus != null)
             {
@@ -65,10 +80,5 @@ public class Unit : MonoBehaviour
     public virtual void StopFollowingTarget()
     {
         StopCoroutine(FollowTarget());
-    }
-
-    public virtual void Attack(Interactable target)
-    {
-
     }
 }

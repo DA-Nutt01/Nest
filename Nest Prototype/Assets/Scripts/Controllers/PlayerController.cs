@@ -5,14 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Global Variables
-    public LayerMask interactableLayer;
-    public LayerMask movementLayer;
-    public ControlState controlState = ControlState.defocused;
+    [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] private LayerMask movementLayer;
+    [SerializeField] private ControlState controlState = ControlState.defocused;
     Camera cam;
 
     //Box Selector Variables
-    [SerializeField]
-    private RectTransform boxVisual;
+    [SerializeField] private RectTransform boxVisual;
 
     private Rect selectionBox;
     private Vector2 boxStartPosition;
@@ -105,6 +104,7 @@ public class PlayerController : MonoBehaviour
                 // If the ray hit an interactable///
                 if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
                 {
+                    // Cache the Interactable component of that interactable
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
 
                     // Loop through every selected unit
@@ -113,8 +113,7 @@ public class PlayerController : MonoBehaviour
                         Unit unit = unitObject.GetComponent<Unit>();
             
                         unit.SetFocus(interactable);
-                        unit.FollowTarget();
-                        
+                        unit.FollowTarget();                        
                     }
                 }
                 else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))

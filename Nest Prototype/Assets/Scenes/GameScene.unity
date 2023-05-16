@@ -233,7 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16a5c93c669f7c4b9c6f211977faac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 2.5
+  interactionRadius: 5
+  isFocus: 0
+  focusingUnits: []
 --- !u!1 &175143910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,7 +1245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16a5c93c669f7c4b9c6f211977faac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 2.5
+  interactionRadius: 5
+  isFocus: 0
+  focusingUnits: []
 --- !u!1 &1962070429
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16a5c93c669f7c4b9c6f211977faac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 2.5
+  interactionRadius: 5
+  isFocus: 0
+  focusingUnits: []
 --- !u!1001 &3049741689524666089
 PrefabInstance:
   m_ObjectHideFlags: 0
