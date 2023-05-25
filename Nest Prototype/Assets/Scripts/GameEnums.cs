@@ -1,12 +1,18 @@
 public enum ControlState 
 {
-    defocused,    // No interactable is focused on 
-    unitsSelected, // A unit is currently focused on
+    Defocused,    // No interactable is focused on 
+    UnitsSelected, // A unit is currently focused on
 }
 
 public enum UnitType
 {
-    alien, //Friendly
-    human, //Human
+    Alien, //Friendly
+    Human, //Human
+}
+
+public enum UnitAttackType
+{
+    Melee, 
+    Ranged,
 }
 

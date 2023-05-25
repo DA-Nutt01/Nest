@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     #region Global Variables
     [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private LayerMask movementLayer;
-    [SerializeField] private ControlState controlState = ControlState.defocused;
+    [SerializeField] private ControlState controlState = ControlState.Defocused;
     Camera cam;
 
     //Box Selector Variables
@@ -71,12 +71,12 @@ public class PlayerController : MonoBehaviour
                 {
                     // Add this unit to the selected units
                     UnitSelectionManager.Instance.ShiftClickSelect(hit.collider.gameObject);
-                    controlState = ControlState.unitsSelected;
+                    controlState = ControlState.UnitsSelected;
                 } else
                 {
                     // Remove all over units from selection & add this one
                     UnitSelectionManager.Instance.ClickSelect(hit.collider.gameObject);
-                    controlState = ControlState.unitsSelected;
+                    controlState = ControlState.UnitsSelected;
                 }
 
             } else // If our ray hit nothing...
@@ -86,14 +86,14 @@ public class PlayerController : MonoBehaviour
                 {
                     // Deselect all units
                     UnitSelectionManager.Instance.DeselectAll();
-                    controlState = ControlState.defocused;
+                    controlState = ControlState.Defocused;
                 }   
                         
             }
         }
 
 
-        if (controlState == ControlState.unitsSelected)
+        if (controlState == ControlState.UnitsSelected)
         {
                 // Unit Movement
             if (Input.GetMouseButtonDown(1)) // On Right Click...
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
             {
                 // Select that unit
                 UnitSelectionManager.Instance.DragSelect(unit);
-                controlState = ControlState.unitsSelected;
+                controlState = ControlState.UnitsSelected;
             }
         }
     }

@@ -10,6 +10,8 @@ public class Unit : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Interactable focus;
     public bool hasInteractedWFocus = false;
+
+    [SerializeField] private UnitData unitData;
     #endregion
 
     void Start()

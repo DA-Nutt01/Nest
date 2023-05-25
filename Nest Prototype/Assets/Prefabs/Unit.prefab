@@ -215,6 +215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionRadius: 2.5
+  isFocus: 0
+  focusingUnits: []
 --- !u!114 &4340687578866921352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +231,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   focus: {fileID: 0}
+  hasInteractedWFocus: 0
+  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
 --- !u!195 &3049741690211191910
 NavMeshAgent:
   m_ObjectHideFlags: 0
