@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
 
                     // Loop through every selected unit
-                    foreach (GameObject unitObject in UnitSelectionManager.Instance.selectedUnits)
+                    foreach (GameObject unitObject in UnitSelectionManager.selectedUnits)
                     {
                         Unit unit = unitObject.GetComponent<Unit>();
             
@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
                 else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
                 {
                     // Loop through every selected unit
-                    foreach (GameObject unit in UnitSelectionManager.Instance.selectedUnits)
+                    foreach (GameObject unit in UnitSelectionManager.selectedUnits)
                     {
                         unit.GetComponent<Unit>().Move(hit.point);
                         unit.GetComponent<Unit>().Defocus();
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
     public void SelectUnitsInBox()
     {
         // Loop through every unit in the scene
-        foreach (GameObject unit in UnitSelectionManager.Instance.allUnits)
+        foreach (GameObject unit in UnitSelectionManager.allUnits)
         {
             // If the unit is within bounds of the selection box...
             if (selectionBox.Contains(cam.WorldToScreenPoint(unit.transform.position)))

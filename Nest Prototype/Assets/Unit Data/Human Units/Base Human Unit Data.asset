@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e9fc699e54161241a18e02a40a9a308, type: 3}
-  m_Name: Base Alien Data
+  m_Name: Base Human Unit Data
   m_EditorClassIdentifier: 
-  uniType: 0
-  unitName: Leaper
-  unitPrefab: {fileID: 0}
+  uniType: 1
+  unitName: Joe
+  unitPrefab: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
+    type: 3}
   attackType: 0
   baseAttackDamage: 10
   baseAttackRange: 1
   baseAttackRate: 1
   baseHitPoints: 50
-  baseMovementSpeed: 7
-  baseDetectionRadius: 10
+  baseMovementSpeed: 5
+  baseDetectionRadius: 7
   baseCost: 50

@@ -16,3 +16,8 @@ public enum UnitAttackType
     Ranged,
 }
 
+public enum InteractableType
+{
+    Unit,
+    Structure,
+}

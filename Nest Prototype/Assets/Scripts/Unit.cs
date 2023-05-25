@@ -7,27 +7,58 @@ using UnityEngine.AI;
 public class Unit : MonoBehaviour
 {
     #region Global Variables
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Interactable focus;
-    public bool hasInteractedWFocus = false;
-
-    [SerializeField] private UnitData unitData;
+    [Header("Unit Data")]
+    [Space(10)]
+    [SerializeField] private BaseUnitData unitData;
+    public UnitAttackType                 attackType;
+    public int                            attackDamage;
+    public float                          attackRange;
+    public float                          attackRate;
+    public int                            maxHitPoints;
+    public int                            currentHitPoints;
+    public float                          movementSpeed;
+    public float                          detectionRadius;
+    public int                            cost;
+    [Space(20)]
+    
+    [Header("Unit Settings")]
+    [Space(10)]
+    [SerializeField] private NavMeshAgent  agent;
+    [SerializeField] private Interactable  focus;
+    public bool                            isInteracting = false;
+    public bool                            isAttacking = false;
     #endregion
+
+    private void Awake()
+    {
+        InitializeUnitData();
+        agent = GetComponent<NavMeshAgent>();               // Cache a ref to this unit's nav mesh agent component
+        UnitSelectionManager.allUnits.Add(this.gameObject); // Add this unit to list of all units in the game
+        Defocus();                                          // Set focus to none
+    }
+
+    public void InitializeUnitData()
+    {
+        attackType = unitData.attackType;
+        attackDamage = unitData.baseAttackDamage;
+        attackRange = unitData.baseAttackRange;
+        attackRate = unitData.baseAttackRate;
+        maxHitPoints = unitData.baseHitPoints;
+        currentHitPoints = maxHitPoints;
+        movementSpeed = unitData.baseMovementSpeed;
+        detectionRadius = unitData.baseDetectionRadius;
+        cost = unitData.baseCost;
+    }
 
     void Start()
     {
-        // Cache a ref to this unit's nav mesh agent component
-        agent = GetComponent<NavMeshAgent>();
-        // Add this unit to list of all units in the game
-        UnitSelectionManager.Instance.allUnits.Add(this.gameObject);
-        // Set focus to none
-        Defocus();
+       
     }
 
     void OnDestroy() 
     {
         // When destroyed, remove this unit from the list of all units
-        UnitSelectionManager.Instance.allUnits.Remove(this.gameObject);
+        UnitSelectionManager.allUnits.Remove(this.gameObject);
     }
 
     public virtual void SetFocus(Interactable newFocus)
@@ -43,7 +74,7 @@ public class Unit : MonoBehaviour
         newFocus.OnFocused(transform);
         // Start following the focus
         StartCoroutine(FollowTarget());
-        hasInteractedWFocus = false;
+        isInteracting = false;
         Debug.Log(gameObject.name + " focusing on " + newFocus.GetComponent<Collider>().name);
     }
 
@@ -54,13 +85,14 @@ public class Unit : MonoBehaviour
             focus.OnDefocused(transform);
             focus = null;
             StopFollowingTarget();
-            hasInteractedWFocus = false;
+            isInteracting = false;
             Debug.Log(gameObject.name + " Defocusing");
         }
     }
 
     public virtual void Move(Vector3 point)
     {
+        agent.speed = movementSpeed;
         agent.SetDestination(point);
         Debug.Log(gameObject.name + " Moving to " + point);
     }
@@ -73,14 +105,58 @@ public class Unit : MonoBehaviour
         {
             if(focus != null)
             {
-                agent.SetDestination(focus.transform.position);
+                agent.SetDestination(focus.transform.position); // Follow target
             }
             yield return null;
         }
     }
 
+    public virtual IEnumerator AttackTarget()
+    {
+        if (focus == null)
+        {
+            Defocus();
+            StopCoroutine(AttackTarget());
+        }
+            
+        while (focus != null)
+        {
+            Debug.Log($"{gameObject.name} dealt {attackDamage} damage to {focus.name}");
+            focus.GetComponent<Unit>().ChangeHealth(-attackDamage);
+            yield return new WaitForSeconds(1f / attackRate);
+        }
+
+        
+    }
+
+    public virtual void ChangeHealth(int amount)
+    {
+        currentHitPoints += amount;
+        if (currentHitPoints <= 0) Die();
+    }
+
     public virtual void StopFollowingTarget()
     {
         StopCoroutine(FollowTarget());
+    }
+
+    public virtual void Interact()
+    {
+        switch (focus.interactableType)
+        {
+            case (InteractableType.Unit):
+                Debug.Log($"{gameObject.name} attacking {focus.name}");
+                StartCoroutine(AttackTarget());
+                break;
+            case (InteractableType.Structure):
+                break;
+        }
+    }
+
+    public virtual void Die()
+    {
+        Debug.Log($"{gameObject.name} has Died");
+        UnitSelectionManager.allUnits.Remove(gameObject);
+        Destroy(gameObject);
     }
 }
