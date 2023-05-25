@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5253818808279812076}
   - component: {fileID: 3659721997051514787}
   - component: {fileID: 2889482486548382795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 4340687578866921352}
   - component: {fileID: 3049741690211191910}
   - component: {fileID: 3049741690211191911}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Base Alien Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,6 +217,7 @@ MonoBehaviour:
   interactionRadius: 2.5
   isFocus: 0
   focusingUnits: []
+  interactableType: 0
 --- !u!114 &4340687578866921352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,10 +230,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
+  attackType: 0
+  attackDamage: 0
+  attackRange: 0
+  attackRate: 0
+  maxHitPoints: 0
+  currentHitPoints: 0
+  movementSpeed: 0
+  detectionRadius: 0
+  cost: 0
   agent: {fileID: 0}
   focus: {fileID: 0}
-  hasInteractedWFocus: 0
-  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
+  isInteracting: 0
+  isAttacking: 0
 --- !u!195 &3049741690211191910
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -283,7 +294,7 @@ GameObject:
   - component: {fileID: 4354904106954425846}
   - component: {fileID: 2458142788176326262}
   - component: {fileID: 1514112557119123045}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Selection Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +390,7 @@ GameObject:
   - component: {fileID: 9072941132968592492}
   - component: {fileID: 150483550360465802}
   - component: {fileID: 5936145110876237378}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2672677270313879746}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

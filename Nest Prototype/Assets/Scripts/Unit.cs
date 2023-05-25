@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     [Header("Unit Data")]
     [Space(10)]
     [SerializeField] private BaseUnitData unitData;
+    public UnitType                       unitType;
     public UnitAttackType                 attackType;
     public int                            attackDamage;
     public float                          attackRange;
@@ -39,6 +40,7 @@ public class Unit : MonoBehaviour
 
     public void InitializeUnitData()
     {
+        unitType = unitData.uniType;
         attackType = unitData.attackType;
         attackDamage = unitData.baseAttackDamage;
         attackRange = unitData.baseAttackRange;
@@ -56,8 +58,7 @@ public class Unit : MonoBehaviour
     }
 
     void OnDestroy() 
-    {
-        // When destroyed, remove this unit from the list of all units
+    {   
         UnitSelectionManager.allUnits.Remove(this.gameObject);
     }
 
@@ -112,21 +113,13 @@ public class Unit : MonoBehaviour
     }
 
     public virtual IEnumerator AttackTarget()
-    {
-        if (focus == null)
-        {
-            Defocus();
-            StopCoroutine(AttackTarget());
-        }
-            
-        while (focus != null)
+    { 
+        while (focus)
         {
             Debug.Log($"{gameObject.name} dealt {attackDamage} damage to {focus.name}");
             focus.GetComponent<Unit>().ChangeHealth(-attackDamage);
             yield return new WaitForSeconds(1f / attackRate);
         }
-
-        
     }
 
     public virtual void ChangeHealth(int amount)

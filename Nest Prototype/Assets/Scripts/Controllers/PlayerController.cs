@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Global Variables
-    [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] private LayerMask friendlyUnitLayer;
     [SerializeField] private LayerMask movementLayer;
+    [SerializeField] private LayerMask interactableLayer;
     [SerializeField] private ControlState controlState = ControlState.Defocused;
     Camera cam;
 
@@ -64,7 +65,7 @@ public class PlayerController : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
 
             // If the ray hit an object on the interatable layer...
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, friendlyUnitLayer))
             {
                 // If the player is holding down shift...
                 if (Input.GetKey(KeyCode.LeftShift))
@@ -178,8 +179,8 @@ public class PlayerController : MonoBehaviour
         // Loop through every unit in the scene
         foreach (GameObject unit in UnitSelectionManager.allUnits)
         {
-            // If the unit is within bounds of the selection box...
-            if (selectionBox.Contains(cam.WorldToScreenPoint(unit.transform.position)))
+            // If the unit is within bounds of the selection box and is an alien unit...
+            if (selectionBox.Contains(cam.WorldToScreenPoint(unit.transform.position)) && unit.GetComponent<Unit>().unitType == UnitType.Alien)
             {
                 // Select that unit
                 UnitSelectionManager.Instance.DragSelect(unit);
