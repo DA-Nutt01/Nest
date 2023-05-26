@@ -2,6 +2,7 @@ public enum ControlState
 {
     Defocused,    // No interactable is focused on 
     UnitsSelected, // A unit is currently focused on
+    StructureSelected,
 }
 
 public enum UnitType
@@ -26,4 +27,11 @@ public enum HumanAIControlState
 {
     Idle,
     Attack,
+}
+
+public enum StructureType
+{
+    Obstacle,
+    Hive,
+    Townhouse,
 }

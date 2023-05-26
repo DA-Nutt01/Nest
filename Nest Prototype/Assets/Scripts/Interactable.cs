@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] private float interactionRadius = 2.5f;              // The min distance a unit needs to be to interact with this
+    public float interactionRadius = 2.5f;              // The min distance a unit needs to be to interact with this
     [SerializeField] private bool  isFocus = false;                       
     public List<Transform>         focusingUnits = new List<Transform>(); // The units that are currently focusing on this
     public InteractableType        interactableType;

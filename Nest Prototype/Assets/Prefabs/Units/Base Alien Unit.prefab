@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6013590047753544103}
   - component: {fileID: 5253818808279812076}
   - component: {fileID: 3659721997051514787}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 3049741690211191908}
   - component: {fileID: 3049741690211191910}
   - component: {fileID: 3049741690211191911}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Base Alien Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,9 +114,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3049741690211191905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6050177702960285188}
   - {fileID: 2672677270313879746}
@@ -199,9 +199,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
+  agent: {fileID: 0}
+  focus: {fileID: 0}
   unitType: 0
   attackType: 0
+  isInteracting: 0
+  isAttacking: 0
+  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
   attackDamage: 0
   attackRange: 0
   attackRate: 0
@@ -209,11 +213,9 @@ MonoBehaviour:
   currentHitPoints: 0
   movementSpeed: 0
   detectionRadius: 15
-  cost: 0
-  agent: {fileID: 0}
-  focus: {fileID: 0}
-  isInteracting: 0
-  isAttacking: 0
+  cost: 100
+  squadSize: 5
+  spawnTime: 3
 --- !u!114 &3049741690211191908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d16a5c93c669f7c4b9c6f211977faac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionRadius: 2.5
+  interactionRadius: 1.5
   isFocus: 0
   focusingUnits: []
   interactableType: 0
@@ -280,7 +282,7 @@ GameObject:
   - component: {fileID: 4354904106954425846}
   - component: {fileID: 2458142788176326262}
   - component: {fileID: 1514112557119123045}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Selection Graphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -375,7 +377,7 @@ GameObject:
   - component: {fileID: 1772456837003255674}
   - component: {fileID: 9072941132968592492}
   - component: {fileID: 150483550360465802}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Eye (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2672677270313879746}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}

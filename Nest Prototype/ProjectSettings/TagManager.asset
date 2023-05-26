@@ -11,10 +11,10 @@ TagManager:
   - Ground
   - Water
   - UI
-  - Interactable
-  - Friendly Units
-  - Enemy Units
-  - 
+  - Alien Unit
+  - Alien Structure
+  - Human Unit
+  - Human Structure
   - 
   - 
   - 

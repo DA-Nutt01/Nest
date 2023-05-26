@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniType: 1
   unitName: Joe
+  attackType: 0
   unitPrefab: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
     type: 3}
-  attackType: 0
   baseAttackDamage: 10
   baseAttackRange: 1
   baseAttackRate: 1
-  baseHitPoints: 50
+  baseHitPoints: 100
   baseMovementSpeed: 5
   baseDetectionRadius: 12
-  baseCost: 50
+  baseCost: 30
+  squadSize: 1
+  spawnTime: 90

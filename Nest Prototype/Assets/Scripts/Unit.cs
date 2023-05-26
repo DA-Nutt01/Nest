@@ -7,27 +7,32 @@ using UnityEngine.AI;
 public class Unit : MonoBehaviour
 {
     #region Global Variables
-    [Header("Unit Data")]
-    [Space(10)]
-    [SerializeField] private BaseUnitData unitData;
-    public UnitType                       unitType;
-    public UnitAttackType                 attackType;
-    public int                            attackDamage;
-    public float                          attackRange;
-    public float                          attackRate;
-    public int                            maxHitPoints;
-    public int                            currentHitPoints;
-    public float                          movementSpeed;
-    public float                          detectionRadius;
-    public int                            cost;
-    [Space(20)]
-    
     [Header("Unit Settings")]
     [Space(10)]
-    [SerializeField] private NavMeshAgent  agent;
-    public Interactable  focus;
-    public bool                            isInteracting = false;
-    public bool                            isAttacking = false;
+    [SerializeField] private NavMeshAgent agent;
+    public Interactable focus;
+    public UnitType unitType;
+    public UnitAttackType attackType;
+    public bool isInteracting = false;
+    public bool isAttacking = false;
+    [Space(20)]
+
+    [Header("Unit Stats")]
+    [Space(10)]
+    [SerializeField]
+    private BaseUnitData unitData;
+    public int           attackDamage;
+    public float         attackRange;
+    public float         attackRate;
+    public int           maxHitPoints;
+    public int           currentHitPoints;
+    public float         movementSpeed;
+    public float         detectionRadius;
+    public int           cost;
+    public int           squadSize;
+    public float         spawnTime;
+    
+    
     #endregion
 
     private void Awake()
@@ -40,16 +45,18 @@ public class Unit : MonoBehaviour
 
     public void InitializeUnitData()
     {
-        unitType = unitData.uniType;
-        attackType = unitData.attackType;
-        attackDamage = unitData.baseAttackDamage;
-        attackRange = unitData.baseAttackRange;
-        attackRate = unitData.baseAttackRate;
-        maxHitPoints = unitData.baseHitPoints;
+        unitType =         unitData.uniType;
+        attackType =       unitData.attackType;
+        attackDamage =     unitData.baseAttackDamage;
+        attackRange =      unitData.baseAttackRange;
+        attackRate =       unitData.baseAttackRate;
+        maxHitPoints =     unitData.baseHitPoints;
         currentHitPoints = maxHitPoints;
-        movementSpeed = unitData.baseMovementSpeed;
-        detectionRadius = unitData.baseDetectionRadius;
-        cost = unitData.baseCost;
+        movementSpeed =    unitData.baseMovementSpeed;
+        detectionRadius =  unitData.baseDetectionRadius;
+        cost =             unitData.baseCost;
+        squadSize =        unitData.squadSize;
+        spawnTime =        unitData.spawnTime;
     }
 
     public virtual void Die()

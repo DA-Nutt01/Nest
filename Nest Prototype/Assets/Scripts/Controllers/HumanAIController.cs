@@ -9,7 +9,7 @@ public class HumanAIController : MonoBehaviour
     //[SerializeField] private HumanAIControlState controlState;
     [SerializeField] private Unit                unit;
     [SerializeField] private Interactable        interactable;
-    [SerializeField] private LayerMask           playerUnitLayer;
+    [SerializeField] private LayerMask           enemyMask;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,7 +22,7 @@ public class HumanAIController : MonoBehaviour
     void Update()
     {
         // Constantly check if any player unit enters this unit's detection radius
-        Collider[] detectedPlayerUnits = Physics.OverlapSphere(transform.position, unit.detectionRadius, playerUnitLayer);
+        Collider[] detectedPlayerUnits = Physics.OverlapSphere(transform.position, unit.detectionRadius, enemyMask);
 
         if (detectedPlayerUnits.Length >= 1 && unit.focus == null)
         {

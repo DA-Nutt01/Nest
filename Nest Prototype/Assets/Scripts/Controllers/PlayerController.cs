@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Global Variables
-    [SerializeField] private LayerMask friendlyUnitLayer;
-    [SerializeField] private LayerMask movementLayer;
-    [SerializeField] private LayerMask interactableLayer;
+    private Camera                        cam;
+    [SerializeField] private LayerMask    selectionMask;
+    [SerializeField] private LayerMask    enemyMask;
+    [SerializeField] private LayerMask    movementMask;
     [SerializeField] private ControlState controlState = ControlState.Defocused;
-    Camera cam;
 
     //Box Selector Variables
     [SerializeField] private RectTransform boxVisual;
@@ -55,6 +55,9 @@ public class PlayerController : MonoBehaviour
             DrawVisual();
         }
 
+        
+
+
         // Unit Selection
         if(Input.GetMouseButtonDown(0)) // On Left Mouse Click
         {
@@ -65,23 +68,40 @@ public class PlayerController : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
 
             // If the ray hit an object on the interatable layer...
-            if(Physics.Raycast(ray, out hit, Mathf.Infinity, friendlyUnitLayer))
+            if(Physics.Raycast(ray, out hit, Mathf.Infinity, selectionMask))
             {
-                // If the player is holding down shift...
-                if (Input.GetKey(KeyCode.LeftShift))
+                switch (hit.transform.gameObject.layer)
                 {
-                    // Add this unit to the selected units
-                    UnitSelectionManager.Instance.ShiftClickSelect(hit.collider.gameObject);
-                    controlState = ControlState.UnitsSelected;
-                } else
-                {
-                    // Remove all over units from selection & add this one
-                    UnitSelectionManager.Instance.ClickSelect(hit.collider.gameObject);
-                    controlState = ControlState.UnitsSelected;
-                }
+                    case (6): // Alien Unit
+                        // If the player is holding down shift...
+                        if (Input.GetKey(KeyCode.LeftShift))
+                        {
+                            // Add this unit to the selected units
+                            UnitSelectionManager.Instance.ShiftClickSelect(hit.collider.gameObject);
+                            
+                        }
+                        else
+                        {
+                            // Remove all over units from selection & add this one
+                            UnitSelectionManager.Instance.ClickSelect(hit.collider.gameObject);
+                            controlState = ControlState.UnitsSelected;
+                        }
 
-            } else // If our ray hit nothing...
+                        StructureSelectionManager.Instance.Deselect();
+                        controlState = ControlState.UnitsSelected;
+                        break;
+                    case (7): //Alien Structure
+                        UnitSelectionManager.Instance.DeselectAll();
+                        // Select Structure
+                        StructureSelectionManager.Instance.SelectStructure(hit.collider.gameObject);
+                        controlState = ControlState.StructureSelected;
+                        break;
+                }
+                
+
+            } else // ray hit nothing
             {
+                StructureSelectionManager.Instance.Deselect();
                 // If the player is not holding down shift...
                 if (!Input.GetKey(KeyCode.LeftShift))
                 {
@@ -103,7 +123,7 @@ public class PlayerController : MonoBehaviour
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
 
                 // If the ray hit an interactable///
-                if(Physics.Raycast(ray, out hit, Mathf.Infinity, interactableLayer))
+                if(Physics.Raycast(ray, out hit, Mathf.Infinity, enemyMask))
                 {
                     // Cache the Interactable component of that interactable
                     Interactable interactable = hit.collider.GetComponent<Interactable>();
@@ -117,7 +137,7 @@ public class PlayerController : MonoBehaviour
                         unit.FollowTarget();                        
                     }
                 }
-                else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementLayer))
+                else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementMask))
                 {
                     // Loop through every selected unit
                     foreach (GameObject unit in UnitSelectionManager.selectedUnits)
@@ -127,6 +147,15 @@ public class PlayerController : MonoBehaviour
                     }
                 }
 
+            }
+        }
+
+        if (controlState == ControlState.StructureSelected)
+        {
+            //Check for input to begin spawn
+            if (Input.GetMouseButtonDown(1))
+            {
+                StructureSelectionManager.Instance.selectedStructure.GetComponent<Hive>().SpawnUnits();
             }
         }
     }

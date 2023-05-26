@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uniType: 0
   unitName: Leaper
-  unitPrefab: {fileID: 0}
   attackType: 0
-  baseAttackDamage: 10
+  unitPrefab: {fileID: 3049741690211191905, guid: fc646b51f81db7349b7624ed1d82b7af,
+    type: 3}
+  baseAttackDamage: 7
   baseAttackRange: 1
-  baseAttackRate: 1
+  baseAttackRate: 2
   baseHitPoints: 50
-  baseMovementSpeed: 7
+  baseMovementSpeed: 10
   baseDetectionRadius: 15
-  baseCost: 50
+  baseCost: 100
+  squadSize: 5
+  spawnTime: 3
