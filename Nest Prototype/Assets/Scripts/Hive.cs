@@ -8,10 +8,14 @@ public class Hive : Structure
     private HiveData hiveData;
     [Tooltip("Prefab this hive will spawn")]
     public GameObject unitPrefab;
-    [Tooltip("Cost in Biomass to construct a hive")]
-    public int cost;
+    [SerializeField ,Tooltip("Parent Game object units are nested under when spawned")]
+    private GameObject parentObject;
     [Tooltip("The radius around the hive units are spawned")]
     public float spawnRadius;
+    [Tooltip("Cost in Biomass to construct a hive")]
+    public int cost;
+    
+     
 
     void Awake()
     {
@@ -21,8 +25,10 @@ public class Hive : Structure
     public override void InitializeStructureData()
     {
         base.InitializeStructureData();
-        cost = hiveData.cost;
+        unitPrefab = hiveData.unitToSpawn;
+        parentObject = GameObject.Find("Alien Units");
         spawnRadius = GetComponent<Interactable>().interactionRadius;
+        cost = hiveData.cost;
     }
     public void SpawnUnits()
     {
@@ -31,55 +37,46 @@ public class Hive : Structure
 
     public IEnumerator SpawnUnitWave()
     {
-        
-        int unitsToSpawn = unitPrefab.GetComponent<Unit>().squadSize;
-        float startTime = Time.time;
-        float endTime = startTime + unitPrefab.GetComponent<Unit>().spawnTime;
-        Debug.Log($"Spawning {unitsToSpawn} units in {endTime - startTime} seconds");
+        int unitsToSpawn = unitPrefab.GetComponent<Unit>().squadSize; // Cache the sqaud size of the unit
+        float spawnTime =  unitPrefab.GetComponent<Unit>().spawnTime; //Cache the spawn time of the unit
+        Debug.Log($"Spawning {unitsToSpawn} units in {spawnTime} seconds");
 
-        List<Vector3> spawnPositions = new List<Vector3>();
+        yield return new WaitForSeconds(spawnTime); // Let the unit's spawn time elapse before spawning units
 
-        while (Time.time < endTime)
+        // Create a loop for each unit to spawn; for each unit to spawn
+        for (int unitsSpawned = 0; unitsSpawned < unitsToSpawn; unitsSpawned++)
         {
-            // Check if a valid spawn position is available
+            // Find a valid position within range of the hive to spawn a unit
             Vector3 spawnPosition = FindValidSpawnPosition();
-
-            if (spawnPosition != Vector3.zero)
-            {
-                spawnPositions.Add(spawnPosition);
-            }
-
-            yield return null;
+            Debug.Log($"Spawn Position {unitsSpawned}: {spawnPosition}");
+            // Spawn the unit at that position
+            Instantiate(unitPrefab, spawnPosition, Quaternion.identity, parentObject.transform);
         }
-        Debug.Log($"Spawn Positions: {spawnPositions.Count}");
-
-        int unitsSpawned = 0;
-
-        while (unitsSpawned < unitsToSpawn && spawnPositions.Count > 0)
-        {
-            // Randomly select a spawn position from the available positions
-            int randomIndex = Random.Range(0, spawnPositions.Count);
-            Vector3 spawnPosition = spawnPositions[randomIndex];
-
-            // Spawn the unit at the selected position
-            Instantiate(unitPrefab, spawnPosition, Quaternion.identity);
-            Debug.Log("Unit Spawned");
-            // Remove the used spawn position from the list
-            spawnPositions.RemoveAt(randomIndex);
-
-            unitsSpawned++;
-        } 
     }
 
     private Vector3 FindValidSpawnPosition()
     {
-        // Calculate random position within the spawn radius
-        Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
+        bool isValidPosition = false;
+        Vector3 validSpawnPosition = Vector3.zero;
+        
+        while (isValidPosition == false)
+        {
+            Vector2 randomCirclePoint = Random.insideUnitCircle * spawnRadius;
+            validSpawnPosition = transform.position + new Vector3(randomCirclePoint.x, 0f, randomCirclePoint.y);
 
-        // Perform your validity check here (e.g., check if the position is obstructed, outside a boundary, etc.)
-        // If the position is not valid, return Vector3.zero or perform another action based on your requirements
+            // A list of any colliders that overlap with the potential spawn position
+            Collider[] overlappingColliders = Physics.OverlapSphere(validSpawnPosition, 0.5f);
 
-        return spawnPosition;
+            // If ther are no overlapping colliders and position is within spawn radius...
+            // && Vector3.Distance(validSpawnPosition, transform.position) > spawnRadius
+            if (overlappingColliders.Length < 1)
+            {
+                isValidPosition = true;
+                break;
+            }    
+                
+        }
+
+        return validSpawnPosition;
     }
-
 }

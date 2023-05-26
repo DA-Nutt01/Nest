@@ -18,6 +18,7 @@ MonoBehaviour:
     type: 3}
   baseHitPoints: 1000
   baseArmor: 25
-  unitToSpawn: {fileID: 0}
+  unitToSpawn: {fileID: 3049741690211191905, guid: fc646b51f81db7349b7624ed1d82b7af,
+    type: 3}
+  spawnRadius: 5.5
   cost: 1000
-  spawnRadius: 3
