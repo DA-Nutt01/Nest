@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
     [Header("Unit Settings")]
     [Space(10)]
     [SerializeField] private NavMeshAgent  agent;
-    [SerializeField] private Interactable  focus;
+    public Interactable  focus;
     public bool                            isInteracting = false;
     public bool                            isAttacking = false;
     #endregion
@@ -52,14 +52,21 @@ public class Unit : MonoBehaviour
         cost = unitData.baseCost;
     }
 
-    void Start()
+    public virtual void Die()
     {
-       
-    }
+        switch (unitType)
+        {
+            case (UnitType.Alien):
+                UnitSelectionManager.selectedUnits.Remove(this.gameObject);
+                break;
+            case (UnitType.Human):
+                break;
+        }
 
-    void OnDestroy() 
-    {   
+        Defocus();
+        Debug.Log($"{gameObject.name} has Died");
         UnitSelectionManager.allUnits.Remove(this.gameObject);
+        Destroy(gameObject);
     }
 
     public virtual void SetFocus(Interactable newFocus)
@@ -146,10 +153,9 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public virtual void Die()
+    void OnDrawGizmosSelected()
     {
-        Debug.Log($"{gameObject.name} has Died");
-        UnitSelectionManager.allUnits.Remove(gameObject);
-        Destroy(gameObject);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

@@ -21,3 +21,9 @@ public enum InteractableType
     Unit,
     Structure,
 }
+
+public enum HumanAIControlState
+{
+    Idle,
+    Attack,
+}

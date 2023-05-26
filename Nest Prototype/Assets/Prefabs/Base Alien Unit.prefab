@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6013590047753544103}
   - component: {fileID: 5253818808279812076}
   - component: {fileID: 3659721997051514787}
-  - component: {fileID: 2889482486548382795}
   m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
@@ -84,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2889482486548382795
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 398039508311656973}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &3049741690211191905
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,8 +95,8 @@ GameObject:
   - component: {fileID: 3049741690211191906}
   - component: {fileID: 3049741690211191907}
   - component: {fileID: 3049741690211191904}
-  - component: {fileID: 3049741690211191908}
   - component: {fileID: 4340687578866921352}
+  - component: {fileID: 3049741690211191908}
   - component: {fileID: 3049741690211191910}
   - component: {fileID: 3049741690211191911}
   m_Layer: 7
@@ -202,6 +187,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4340687578866921352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049741690211191905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
+  unitType: 0
+  attackType: 0
+  attackDamage: 0
+  attackRange: 0
+  attackRate: 0
+  maxHitPoints: 0
+  currentHitPoints: 0
+  movementSpeed: 0
+  detectionRadius: 15
+  cost: 0
+  agent: {fileID: 0}
+  focus: {fileID: 0}
+  isInteracting: 0
+  isAttacking: 0
 --- !u!114 &3049741690211191908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,32 +230,6 @@ MonoBehaviour:
   isFocus: 0
   focusingUnits: []
   interactableType: 0
---- !u!114 &4340687578866921352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049741690211191905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
-  attackType: 0
-  attackDamage: 0
-  attackRange: 0
-  attackRate: 0
-  maxHitPoints: 0
-  currentHitPoints: 0
-  movementSpeed: 0
-  detectionRadius: 0
-  cost: 0
-  agent: {fileID: 0}
-  focus: {fileID: 0}
-  isInteracting: 0
-  isAttacking: 0
 --- !u!195 &3049741690211191910
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -389,7 +375,6 @@ GameObject:
   - component: {fileID: 1772456837003255674}
   - component: {fileID: 9072941132968592492}
   - component: {fileID: 150483550360465802}
-  - component: {fileID: 5936145110876237378}
   m_Layer: 7
   m_Name: Eye (1)
   m_TagString: Untagged
@@ -462,20 +447,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5936145110876237378
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7225345885339035119}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &9002990280765920607
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,5 +22,5 @@ MonoBehaviour:
   baseAttackRate: 1
   baseHitPoints: 50
   baseMovementSpeed: 5
-  baseDetectionRadius: 7
+  baseDetectionRadius: 12
   baseCost: 50
