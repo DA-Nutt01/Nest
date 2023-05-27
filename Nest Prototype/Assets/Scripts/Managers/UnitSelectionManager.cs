@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class UnitSelectionManager : MonoBehaviour
 {
-    // List of all units in the scene
-    public List<GameObject> allUnits = new List<GameObject>();
-    // List of all units in the scene currently selected
-    public List<GameObject> selectedUnits = new List<GameObject>();
-
+    
+    public static List<GameObject>      allUnits = new List<GameObject>();      // List of all units in the scene
+    public static List<GameObject>      selectedUnits = new List<GameObject>(); // List of all units in the scene currently selected
     private static UnitSelectionManager _instance;
-    public static UnitSelectionManager Instance {get {return _instance;}}
+    public static UnitSelectionManager  Instance {get {return _instance;}}
 
     void Awake() 
     {

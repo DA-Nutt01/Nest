@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    // The min distance a unit needs to be to interact with this 
-    [SerializeField] private float interactionRadius = 2.5f;
-    [SerializeField] private bool isFocus = false;
-    // The units that are currently focusing on this
-    [SerializeField] private List<Transform> focusingUnits = new List<Transform>();
-    // A list of bools tracking if each focusing unit has interacted with this yet
-
+    public float interactionRadius = 2.5f;              // The min distance a unit needs to be to interact with this
+    [SerializeField] private bool  isFocus = false;                       
+    public List<Transform>         focusingUnits = new List<Transform>(); // The units that are currently focusing on this
+    public InteractableType        interactableType;
     private void Update()
     {
         // While this is the focus of a unit...
@@ -21,15 +18,24 @@ public class Interactable : MonoBehaviour
                 float distance = Vector3.Distance(unit.position, transform.position);
 
                 // Checks if the unit is close enough to interact with this
-                if (distance <= interactionRadius && !unit.GetComponent<Unit>().hasInteractedWFocus)
+                if (distance <= interactionRadius && !unit.GetComponent<Unit>().isInteracting)
                 {
                     // Unit interacts with this
-                    Interact(unit.GetComponent<Unit>());
+                    unit.GetComponent<Unit>().isInteracting = true;
+                    unit.GetComponent<Unit>().Interact();
                 }
             }
         }
     }
-    
+
+    private void OnDestroy()
+    {
+        foreach (Transform unit in focusingUnits.ToArray())
+        {
+            unit.GetComponent<Unit>().Defocus();
+        }
+    }
+
     // When a unit focuses on this
     public void OnFocused(Transform unitTransform)
     {
@@ -55,17 +61,10 @@ public class Interactable : MonoBehaviour
             isFocus = false;
         }
     }
-
-    public virtual void Interact(Unit unit)
-    {
-        unit.GetComponent<Unit>().hasInteractedWFocus = true;
-        Debug.Log(unit.name + " is interacting with " + transform.name);
-    }
-
-    void OnDrawGizmosSelected () 
+     void OnDrawGizmosSelected () 
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interactionRadius);
-    }
+    } 
 
 }
