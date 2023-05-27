@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
             //Check for input to begin spawn
             if (Input.GetMouseButtonDown(1))
             {
-                StructureSelectionManager.Instance.selectedStructure.GetComponent<Hive>().SpawnUnits();
+                StructureSelectionManager.Instance.selectedStructure.GetComponent<AlienHive>().SpawnUnits();
             }
         }
     }

@@ -163,15 +163,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   structureData: {fileID: 11400000, guid: b5c76a5070615b54cb5286529cd9e3e2, type: 2}
-  structureType: 2
-  structureName: City Hall
-  structurePrefab: {fileID: 1672450145796541145}
-  baseHitPoints: 0
-  baseArmor: 0
+  type: 2
+  name: Town Hall
+  prefab: {fileID: 1672450145796541145}
+  maxHitPoints: 0
+  currentHitPoints: 0
+  defense: 0
   townhouseData: {fileID: 11400000, guid: b5c76a5070615b54cb5286529cd9e3e2, type: 2}
   humanUnitData: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df, type: 2}
   parentObject: {fileID: 0}
-  spawnRadius: 5.5
+  spawnRadius: 0
   isBusy: 0
 --- !u!114 &937814668945327595
 MonoBehaviour:

@@ -1,33 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Hive : Structure
+public class AlienHive : Structure
 {
-    [SerializeField,Header("Hive Settings"), Space(10)]
+    [Header("Hive Settings"), Space(10)]
+
+    [SerializeField, Tooltip("The scriptable object this derives data for initialization")]
     private HiveData hiveData;
-    [Tooltip("Prefab this Hive will spawn")]
+
+    [Tooltip("Reference to scriptable object for human unit")]
     public BaseUnitData alienUnitData;
-    [SerializeField ,Tooltip("Parent Game object units are nested under when spawned")]
+
+    [SerializeField, Tooltip("Parent Game object units are nested under when spawned")]
     private GameObject parentObject;
+
     [Tooltip("The radius around the hive units are spawned")]
     public float spawnRadius;
+
     [SerializeField,Tooltip("The amount of biomass needed to construct this")]
     private int cost;
+
+    [SerializeField, Tooltip("Flag signaling if this hive is currently doing a task or not")]
     private bool isBusy = false;
-    
-     
 
-    void Awake()
+    protected override void InitializeChild()
     {
-        InitializeStructureData();
-    }
-
-    public override void InitializeStructureData()
-    {
-        base.InitializeStructureData();
-        parentObject = GameObject.Find("Human Units");
-        spawnRadius = GetComponent<Interactable>().interactionRadius;
+        parentObject = GameObject.Find("Alien Units");
+        spawnRadius = hiveData.spawnRadius;
         cost = hiveData.cost;
     }
     public void SpawnUnits()

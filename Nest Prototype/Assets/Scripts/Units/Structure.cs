@@ -1,34 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Interactable))]
-public class Structure : MonoBehaviour
+public abstract class Structure : MonoBehaviour
 {
-    [SerializeField] private BaseStructureData structureData;
-    [Header("Structure Settings")]
-    [Space(10)]
-    public StructureType structureType;
-    public string        structureName;
-    public GameObject    structurePrefab;
-    [Space(20)]
+    [Header("Structure Settings"), Space(10)]
 
-    [Header("Structure Stats")]
-    [Space(10)]
-    public int baseHitPoints;
-    public int baseArmor;
+    [SerializeField, Tooltip("The scriptable object this derives data for initialization")]
+    protected BaseStructureData structureData;
 
+    [SerializeField, Tooltip("The type of structure this is")]
+    protected StructureType type;  
+    
+    [SerializeField, Tooltip("Name of this structure")]
+    protected new string    name;
 
-    // Start is called before the first frame update
-    void Awake()
+    [SerializeField, Tooltip("The prefab that represents this structure")]
+    protected GameObject prefab;            
+
+    [Space(20), Header("Structure Stats"), Space(10)]
+
+    [SerializeField, Tooltip("The maximum hit points of this structure")]
+    protected int maxHitPoints;
+
+    [SerializeField, Tooltip("The current hit points of this structure")]
+    protected int currentHitPoints;
+
+    [SerializeField, Tooltip("The percentage of damage ignored from damage sources")]
+    protected int defense;
+
+    protected virtual void Awake()
     {
-        InitializeStructureData();
+        InitializeData(structureData);
+        InitializeChild();
+        Debug.Log("Initializing Data");
     }
 
-    public virtual void InitializeStructureData()
+    public virtual void InitializeData(BaseStructureData data)
     {
-        structureType = structureData.structureType;
-        baseHitPoints = structureData.baseHitPoints;
-        baseArmor =     structureData.baseArmor;
+        structureData = data;
+        type = data.type;
+        name = data.name;
+        prefab = data.prefab;
+
+        maxHitPoints = data.maxHitPoints;
+        currentHitPoints = data.currentHitPoints;
+        defense = data.defense;
+
+        // Call child-specific initialization method
+        InitializeChild();
     }
+    protected abstract void InitializeChild();
 }

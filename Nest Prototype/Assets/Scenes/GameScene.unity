@@ -334,12 +334,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5067211592375456081, guid: 1ce99aec1499bdc498a397ee6c870bac,
-        type: 3}
-      propertyPath: humanUnitData
-      value: 
-      objectReference: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ce99aec1499bdc498a397ee6c870bac, type: 3}
 --- !u!1 &175143910
@@ -1834,11 +1828,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1783858314}
     m_Modifications:
-    - target: {fileID: 1672450145796541122, guid: d7cfb60975d6d964fb327c0a33c204c3,
-        type: 3}
-      propertyPath: interactionRadius
-      value: 5.5
-      objectReference: {fileID: 0}
     - target: {fileID: 1672450145796541145, guid: d7cfb60975d6d964fb327c0a33c204c3,
         type: 3}
       propertyPath: m_Name
@@ -1899,21 +1888,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5117993476226612288, guid: d7cfb60975d6d964fb327c0a33c204c3,
-        type: 3}
-      propertyPath: spawnRadius
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5117993476226612288, guid: d7cfb60975d6d964fb327c0a33c204c3,
-        type: 3}
-      propertyPath: parentObject
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5117993476226612288, guid: d7cfb60975d6d964fb327c0a33c204c3,
-        type: 3}
-      propertyPath: alienUnitData
-      value: 
-      objectReference: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7cfb60975d6d964fb327c0a33c204c3, type: 3}

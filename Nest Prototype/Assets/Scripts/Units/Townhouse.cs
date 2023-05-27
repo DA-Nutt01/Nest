@@ -1,32 +1,35 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Townhouse : Structure
 {
-    [SerializeField, Tooltip("Reference to scriptable object for townhouse"), Header("Townhouse Settings"), Space(10)]
+    [Header("Townhouse Settings"), Space(10)]
+
+    [SerializeField, Tooltip("The scriptable object this derives data for initialization")]
     private TownHouseData townhouseData;
+
     [Tooltip("Reference to scriptable object for human unit")]
     public BaseUnitData humanUnitData;
-    [SerializeField ,Tooltip("Parent Game object units are nested under when spawned")]
+
+    [SerializeField, Tooltip("Parent Game object units are nested under when spawned")]
     private GameObject parentObject;
+
     [Tooltip("The radius around the townhouse units are spawned")]
     public float spawnRadius;
-    public bool isBusy = false;
-    
-     
 
-    void Awake()
+    [SerializeField, Tooltip("Flag signaling if this hive is currently doing a task or not")]
+    private bool isBusy = false;
+
+    protected override void Awake()
     {
-        InitializeStructureData();
+        base.Awake(); // Call Awake method in parent class to initialize this data
         InvokeRepeating("SpawnUnits", 3f, humanUnitData.spawnTime + 3f);
     }
 
-    public override void InitializeStructureData()
+    protected override void InitializeChild()
     {
-        base.InitializeStructureData();
-        parentObject = GameObject.Find("Alien Units");
-        spawnRadius = GetComponent<Interactable>().interactionRadius;
+        parentObject = GameObject.Find("Human Units");
+        spawnRadius = townhouseData.spawnRadius;
     }
     public void SpawnUnits()
     {
