@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StructureSelectionManager : MonoBehaviour
 {
-    [SerializeField, Tooltip("The currently selected structure")] 
+    [SerializeField, Tooltip("The currently selected friendly structure")] 
     public GameObject                       selectedStructure;
     private static StructureSelectionManager _instance;
 

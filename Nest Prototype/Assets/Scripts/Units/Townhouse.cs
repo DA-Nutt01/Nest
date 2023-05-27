@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hive : Structure
+public class Townhouse : Structure
 {
-    [SerializeField,Header("Hive Settings"), Space(10)]
-    private HiveData hiveData;
-    [Tooltip("Prefab this hive will spawn")]
+    [SerializeField,Header("Townhouse Settings"), Space(10)]
+    private TownHouseData townhouseData;
+    [Tooltip("Prefab this townhouse will spawn")]
     public GameObject unitPrefab;
     [SerializeField ,Tooltip("Parent Game object units are nested under when spawned")]
     private GameObject parentObject;
-    [Tooltip("The radius around the hive units are spawned")]
+    [Tooltip("The radius around the townhouse units are spawned")]
     public float spawnRadius;
-    [Tooltip("Cost in Biomass to construct a hive")]
-    public int cost;
+    private bool isBusy = false;
     
      
 
@@ -25,18 +24,24 @@ public class Hive : Structure
     public override void InitializeStructureData()
     {
         base.InitializeStructureData();
-        unitPrefab = hiveData.unitToSpawn;
+        unitPrefab = townhouseData.unitToSpawn;
         parentObject = GameObject.Find("Alien Units");
         spawnRadius = GetComponent<Interactable>().interactionRadius;
-        cost = hiveData.cost;
     }
     public void SpawnUnits()
     {
-        StartCoroutine(SpawnUnitWave());
+        // Check if this hive is already busy with another task
+        // Check and spend amount of biomass to spawn units
+        if (!isBusy)
+            StartCoroutine(SpawnUnitWave());
+        else
+            Debug.Log("Hive is currently Busy");
     }
 
     public IEnumerator SpawnUnitWave()
     {
+        isBusy = true;
+
         int unitsToSpawn = unitPrefab.GetComponent<Unit>().squadSize; // Cache the sqaud size of the unit
         float spawnTime =  unitPrefab.GetComponent<Unit>().spawnTime; //Cache the spawn time of the unit
         Debug.Log($"Spawning {unitsToSpawn} units in {spawnTime} seconds");
@@ -48,10 +53,12 @@ public class Hive : Structure
         {
             // Find a valid position within range of the hive to spawn a unit
             Vector3 spawnPosition = FindValidSpawnPosition();
-            Debug.Log($"Spawn Position {unitsSpawned}: {spawnPosition}");
             // Spawn the unit at that position
             Instantiate(unitPrefab, spawnPosition, Quaternion.identity, parentObject.transform);
         }
+
+        isBusy = false;
+        Debug.Log($"Units Spawned");
     }
 
     private Vector3 FindValidSpawnPosition()
@@ -68,7 +75,6 @@ public class Hive : Structure
             Collider[] overlappingColliders = Physics.OverlapSphere(validSpawnPosition, 0.5f);
 
             // If ther are no overlapping colliders and position is within spawn radius...
-            // && Vector3.Distance(validSpawnPosition, transform.position) > spawnRadius
             if (overlappingColliders.Length < 1)
             {
                 isValidPosition = true;
