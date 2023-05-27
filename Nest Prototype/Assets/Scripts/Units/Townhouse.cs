@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Townhouse : Structure
 {
-    [SerializeField,Header("Townhouse Settings"), Space(10)]
+    [SerializeField, Tooltip("Reference to scriptable object for townhouse"), Header("Townhouse Settings"), Space(10)]
     private TownHouseData townhouseData;
-    [Tooltip("Prefab this townhouse will spawn")]
-    public GameObject unitPrefab;
+    [Tooltip("Reference to scriptable object for human unit")]
+    public BaseUnitData humanUnitData;
     [SerializeField ,Tooltip("Parent Game object units are nested under when spawned")]
     private GameObject parentObject;
     [Tooltip("The radius around the townhouse units are spawned")]
     public float spawnRadius;
-    private bool isBusy = false;
+    public bool isBusy = false;
     
      
 
@@ -24,7 +24,6 @@ public class Townhouse : Structure
     public override void InitializeStructureData()
     {
         base.InitializeStructureData();
-        unitPrefab = townhouseData.unitToSpawn;
         parentObject = GameObject.Find("Alien Units");
         spawnRadius = GetComponent<Interactable>().interactionRadius;
     }
@@ -42,8 +41,8 @@ public class Townhouse : Structure
     {
         isBusy = true;
 
-        int unitsToSpawn = unitPrefab.GetComponent<Unit>().squadSize; // Cache the sqaud size of the unit
-        float spawnTime =  unitPrefab.GetComponent<Unit>().spawnTime; //Cache the spawn time of the unit
+        int unitsToSpawn = humanUnitData.squadSize; // Cache the sqaud size of the unit
+        float spawnTime =  humanUnitData.spawnTime; //Cache the spawn time of the unit
         Debug.Log($"Spawning {unitsToSpawn} units in {spawnTime} seconds");
 
         yield return new WaitForSeconds(spawnTime); // Let the unit's spawn time elapse before spawning units
@@ -54,7 +53,7 @@ public class Townhouse : Structure
             // Find a valid position within range of the hive to spawn a unit
             Vector3 spawnPosition = FindValidSpawnPosition();
             // Spawn the unit at that position
-            Instantiate(unitPrefab, spawnPosition, Quaternion.identity, parentObject.transform);
+            Instantiate(humanUnitData.unitPrefab, spawnPosition, Quaternion.identity, parentObject.transform);
         }
 
         isBusy = false;

@@ -22,7 +22,7 @@ MonoBehaviour:
   baseAttackRate: 1
   baseHitPoints: 100
   baseMovementSpeed: 5
-  baseDetectionRadius: 12
+  baseDetectionRadius: 15
   baseCost: 30
-  squadSize: 1
-  spawnTime: 90
+  squadSize: 2
+  spawnTime: 5

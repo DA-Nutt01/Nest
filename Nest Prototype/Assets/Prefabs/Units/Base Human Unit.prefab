@@ -215,21 +215,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df, type: 2}
+  agent: {fileID: 0}
+  focus: {fileID: 0}
   unitType: 0
   attackType: 0
+  isInteracting: 0
+  isAttacking: 0
+  unitData: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df, type: 2}
   attackDamage: 0
   attackRange: 0
   attackRate: 0
   maxHitPoints: 0
   currentHitPoints: 0
   movementSpeed: 0
-  detectionRadius: 12
+  detectionRadius: 0
   cost: 0
-  agent: {fileID: 0}
-  focus: {fileID: 0}
-  isInteracting: 0
-  isAttacking: 0
+  squadSize: 0
+  spawnTime: 0
 --- !u!114 &1740203436213860214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,10 +246,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
   interactable: {fileID: 0}
-  detectedPlayerUnits: []
-  playerUnitLayer:
+  enemyMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 192
 --- !u!195 &3049741690211191910
 NavMeshAgent:
   m_ObjectHideFlags: 0
