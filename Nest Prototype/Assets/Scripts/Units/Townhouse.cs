@@ -19,6 +19,7 @@ public class Townhouse : Structure
     void Awake()
     {
         InitializeStructureData();
+        InvokeRepeating("SpawnUnits", 3f, humanUnitData.spawnTime + 3f);
     }
 
     public override void InitializeStructureData()

@@ -90,7 +90,6 @@ public class Unit : MonoBehaviour
         // Start following the focus
         StartCoroutine(FollowTarget());
         isInteracting = false;
-        Debug.Log(gameObject.name + " focusing on " + newFocus.GetComponent<Collider>().name);
     }
 
     public virtual void Defocus()
@@ -101,7 +100,6 @@ public class Unit : MonoBehaviour
             focus = null;
             StopFollowingTarget();
             isInteracting = false;
-            Debug.Log(gameObject.name + " Defocusing");
         }
     }
 
@@ -109,13 +107,10 @@ public class Unit : MonoBehaviour
     {
         agent.speed = movementSpeed;
         agent.SetDestination(point);
-        Debug.Log(gameObject.name + " Moving to " + point);
     }
 
     public virtual IEnumerator FollowTarget()
     {
-        Debug.Log(gameObject.name + " Following " + focus);
-
         while (true)
         {
             if(focus != null)

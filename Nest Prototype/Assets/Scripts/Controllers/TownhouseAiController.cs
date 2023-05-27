@@ -9,7 +9,5 @@ public class TownhouseAiController : MonoBehaviour
     void Awake()
     {
         townHouse = GetComponent<Townhouse>();
-        //InvokeRepeating("SpawnUnits", 3f, townHouse.unitPrefab.GetComponent<Unit>().spawnTime + 3f);
-        townHouse.SpawnUnits();
     }
 }

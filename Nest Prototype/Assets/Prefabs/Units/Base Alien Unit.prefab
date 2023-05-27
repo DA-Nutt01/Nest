@@ -212,10 +212,10 @@ MonoBehaviour:
   maxHitPoints: 0
   currentHitPoints: 0
   movementSpeed: 0
-  detectionRadius: 15
-  cost: 100
-  squadSize: 5
-  spawnTime: 3
+  detectionRadius: 0
+  cost: 0
+  squadSize: 0
+  spawnTime: 0
 --- !u!114 &3049741690211191908
 MonoBehaviour:
   m_ObjectHideFlags: 0
