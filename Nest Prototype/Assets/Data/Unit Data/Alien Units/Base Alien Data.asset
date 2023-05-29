@@ -17,12 +17,14 @@ MonoBehaviour:
   attackType: 0
   unitPrefab: {fileID: 3049741690211191905, guid: fc646b51f81db7349b7624ed1d82b7af,
     type: 3}
-  baseAttackDamage: 7
-  baseAttackRange: 1
-  baseAttackRate: 2
-  baseHitPoints: 50
-  baseMovementSpeed: 10
-  baseDetectionRadius: 15
-  baseCost: 100
+  atackDamage: 5
+  attackRange: 1
+  attackRate: 0
+  maxHitPoints: 50
+  currentHitPoint: 50
+  patrolSpeed: 3
+  runSpeed: 10
+  detectionRadius: 15
+  cost: 60
   squadSize: 6
-  spawnTime: 120
+  spawnTime: 30

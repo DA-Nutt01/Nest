@@ -32,7 +32,6 @@ public abstract class Structure : MonoBehaviour
     {
         InitializeData(structureData);
         InitializeChild();
-        Debug.Log("Initializing Data");
     }
 
     public virtual void InitializeData(BaseStructureData data)

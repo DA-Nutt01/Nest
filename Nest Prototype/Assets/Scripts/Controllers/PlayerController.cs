@@ -142,7 +142,8 @@ public class PlayerController : MonoBehaviour
                     // Loop through every selected unit
                     foreach (GameObject unit in UnitSelectionManager.selectedUnits)
                     {
-                        unit.GetComponent<Unit>().Move(hit.point);
+                        Unit currentUnit = unit.GetComponent<Unit>();
+                        currentUnit.Move(hit.point, currentUnit.runSpeed);
                         unit.GetComponent<Unit>().Defocus();
                     }
                 }

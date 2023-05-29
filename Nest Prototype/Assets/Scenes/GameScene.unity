@@ -1029,11 +1029,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base Human Unit
       objectReference: {fileID: 0}
-    - target: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3049741690211191909, guid: 1ec48998738f97146a0d6a8f037ddb3b,
         type: 3}
       propertyPath: m_RootOrder
@@ -1456,11 +1451,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base Human Unit (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3049741690211191909, guid: 1ec48998738f97146a0d6a8f037ddb3b,
         type: 3}
       propertyPath: m_RootOrder
@@ -1710,11 +1700,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340687578866921352, guid: 1ec48998738f97146a0d6a8f037ddb3b,
-        type: 3}
-      propertyPath: detectionRadius
-      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ec48998738f97146a0d6a8f037ddb3b, type: 3}

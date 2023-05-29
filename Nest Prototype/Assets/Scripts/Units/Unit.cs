@@ -9,7 +9,8 @@ public class Unit : MonoBehaviour
     #region Global Variables
     [Header("Unit Settings")]
     [Space(10)]
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] 
+    public NavMeshAgent agent;
     public Interactable focus;
     public UnitType unitType;
     public UnitAttackType attackType;
@@ -26,7 +27,8 @@ public class Unit : MonoBehaviour
     public float         attackRate;
     public int           maxHitPoints;
     public int           currentHitPoints;
-    public float         movementSpeed;
+    public float         patrolSpeed;
+    public float         runSpeed;
     public float         detectionRadius;
     public int           cost;
     public int           squadSize;
@@ -47,14 +49,15 @@ public class Unit : MonoBehaviour
     {
         unitType =         unitData.uniType;
         attackType =       unitData.attackType;
-        attackDamage =     unitData.baseAttackDamage;
-        attackRange =      unitData.baseAttackRange;
-        attackRate =       unitData.baseAttackRate;
-        maxHitPoints =     unitData.baseHitPoints;
-        currentHitPoints = maxHitPoints;
-        movementSpeed =    unitData.baseMovementSpeed;
-        detectionRadius =  unitData.baseDetectionRadius;
-        cost =             unitData.baseCost;
+        attackDamage =     unitData.atackDamage;
+        attackRange =      unitData.attackRange;
+        attackRate =       unitData.attackRate;
+        maxHitPoints =     unitData.maxHitPoints;
+        currentHitPoints = unitData.maxHitPoints;
+        patrolSpeed =      unitData.patrolSpeed;
+        runSpeed =         unitData.runSpeed;
+        detectionRadius =  unitData.detectionRadius;
+        cost =             unitData.cost;
         squadSize =        unitData.squadSize;
         spawnTime =        unitData.spawnTime;
     }
@@ -103,9 +106,9 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public virtual void Move(Vector3 point)
+    public virtual void Move(Vector3 point, float moveSpeed)
     {
-        agent.speed = movementSpeed;
+        agent.speed = moveSpeed;
         agent.SetDestination(point);
     }
 
