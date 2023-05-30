@@ -4,6 +4,7 @@ using System;
 
 public class UnitStateController : MonoBehaviour
 {
+    // Internal dictionary of type of state for the key and the instance of it for the value
     private Dictionary<Type, BaseState> activeStates = new Dictionary<Type, BaseState>();
 
     [SerializeField, Tooltip("List of all state behaviors on this unit")]
@@ -59,5 +60,15 @@ public class UnitStateController : MonoBehaviour
         }
 
         UpdateStateList();
+    }
+
+    private void Update()
+    {
+        // Check if this unit is idle or not & this is not focusing on anything
+        if (activeStates.ContainsKey(typeof(IdleState)) && gameObject.GetComponent<Unit>().focus == null)
+        {
+            PatrolState patrolState = new PatrolState();
+            AddState(patrolState);
+        }
     }
 }

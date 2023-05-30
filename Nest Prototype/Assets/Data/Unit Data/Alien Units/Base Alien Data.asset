@@ -12,14 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9fc699e54161241a18e02a40a9a308, type: 3}
   m_Name: Base Alien Data
   m_EditorClassIdentifier: 
-  uniType: 0
+  unitType: 0
   unitName: Leaper
   attackType: 0
   unitPrefab: {fileID: 3049741690211191905, guid: fc646b51f81db7349b7624ed1d82b7af,
     type: 3}
+  maxHealth: 75
+  currentHealth: 75
   atackDamage: 5
   attackRange: 1
-  attackRate: 0
+  attackRate: 2
   maxHitPoints: 50
   currentHitPoint: 50
   patrolSpeed: 3

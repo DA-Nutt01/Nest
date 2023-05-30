@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 3049741690211191908}
   - component: {fileID: 4340687578866921352}
   - component: {fileID: 5189922751926508023}
-  - component: {fileID: -4026030326847293139}
+  - component: {fileID: 5846248681332977555}
   m_Layer: 8
   m_Name: Base Human Unit
   m_TagString: Untagged
@@ -261,11 +261,10 @@ MonoBehaviour:
   isInteracting: 0
   isAttacking: 0
   unitData: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df, type: 2}
+  health: {fileID: 0}
   attackDamage: 0
   attackRange: 0
   attackRate: 0
-  maxHitPoints: 0
-  currentHitPoints: 0
   patrolSpeed: 0
   runSpeed: 0
   detectionRadius: 0
@@ -285,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeStateList: []
---- !u!114 &-4026030326847293139
+--- !u!114 &5846248681332977555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -294,16 +293,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3049741690211191905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a229269693302942ad4c322cfe41865, type: 3}
+  m_Script: {fileID: 11500000, guid: e856fd205d0819d4e914ec86834442a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
-  stateController: {fileID: 0}
-  patrolPoints: []
-  currentPointIndex: 0
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 0
+  maxHealth: 0
+  currentHealth: 0
 --- !u!1 &7225345885339035119
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,15 +15,12 @@ public abstract class Structure : MonoBehaviour
     protected new string    name;
 
     [SerializeField, Tooltip("The prefab that represents this structure")]
-    protected GameObject prefab;            
+    protected GameObject prefab;
 
     [Space(20), Header("Structure Stats"), Space(10)]
 
-    [SerializeField, Tooltip("The maximum hit points of this structure")]
-    protected int maxHitPoints;
-
-    [SerializeField, Tooltip("The current hit points of this structure")]
-    protected int currentHitPoints;
+    [SerializeField, Tooltip("Reference to Health component on this")]
+    protected Health health;
 
     [SerializeField, Tooltip("The percentage of damage ignored from damage sources")]
     protected int defense;
@@ -41,8 +38,9 @@ public abstract class Structure : MonoBehaviour
         name = data.name;
         prefab = data.prefab;
 
-        maxHitPoints = data.maxHitPoints;
-        currentHitPoints = data.currentHitPoints;
+        health = GetComponent<Health>();
+        health.maxHealth = data.maxHitPoints;
+        health.currentHealth = data.currentHitPoints;
         defense = data.defense;
 
         // Call child-specific initialization method

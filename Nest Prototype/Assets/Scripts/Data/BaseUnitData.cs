@@ -13,18 +13,21 @@ public class BaseUnitData : ScriptableObject
 
     [Header("Unit Stats")]
     [Space(10)]
-    public int   atackDamage;
-    public float attackRange;
+    [Tooltip("Reference to health component on this unit")]
+    public int    maxHealth;
+    public int    currentHealth;
+    public int    atackDamage;
+    public float  attackRange;
     [Tooltip("The number of attacks per second")]
-    public float attackRate; 
-    public int   maxHitPoints;
-    public int   currentHitPoint;
-    public float patrolSpeed;
-    public float runSpeed;
-    public float detectionRadius;
-    public int   cost;
+    public float  attackRate;
+    public int    maxHitPoints;
+    public int    currentHitPoint;
+    public float  patrolSpeed;
+    public float  runSpeed;
+    public float  detectionRadius;
+    public int    cost;
     [Tooltip("The number of this unit spawned when instantiated")]
-    public int   squadSize;
+    public int    squadSize;
     [Tooltip("Amount of time in sec for unit to be spawned")]
-    public float spawnTime;
+    public float  spawnTime;
 }
