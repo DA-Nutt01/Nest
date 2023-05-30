@@ -54,23 +54,10 @@ public class UnitStateController : MonoBehaviour
         if (activeStates.ContainsKey(stateType))
         {
             BaseState stateToRemove = activeStates[stateType];
-            stateToRemove.ExitState();
+            //stateToRemove.ExitState();
             activeStates.Remove(stateType);
-            Destroy(stateToRemove);
-            Destroy(this.GetComponent<StateType>());
         }
 
         UpdateStateList();
     }
-
-    // Other methods and logic for managing state transitions
-    /*
-    private void Update()
-    {
-        // Update all active states
-        foreach (var state in activeStates.Values)
-        {
-            state.UpdateState();
-        }
-    } */
 }

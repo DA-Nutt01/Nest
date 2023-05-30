@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 3049741690211191911}
   - component: {fileID: 3049741690211191908}
   - component: {fileID: 4340687578866921352}
-  - component: {fileID: 1740203436213860214}
   - component: {fileID: 5189922751926508023}
   - component: {fileID: -4026030326847293139}
   m_Layer: 8
@@ -273,23 +272,6 @@ MonoBehaviour:
   cost: 0
   squadSize: 0
   spawnTime: 0
---- !u!114 &1740203436213860214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049741690211191905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59f6c024921ea341ae6bc5f283604b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: 0}
-  interactable: {fileID: 0}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 192
 --- !u!114 &5189922751926508023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,8 +298,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unit: {fileID: 0}
+  stateController: {fileID: 0}
   patrolPoints: []
   currentPointIndex: 0
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7225345885339035119
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,7 +47,7 @@ public class Unit : MonoBehaviour
 
     public void InitializeUnitData()
     {
-        unitType =         unitData.uniType;
+        unitType =         unitData.unitType;
         attackType =       unitData.attackType;
         attackDamage =     unitData.atackDamage;
         attackRange =      unitData.attackRange;
@@ -114,6 +114,8 @@ public class Unit : MonoBehaviour
 
     public virtual IEnumerator FollowTarget()
     {
+        agent.speed = runSpeed;
+
         while (true)
         {
             if(focus != null)

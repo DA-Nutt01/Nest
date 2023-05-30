@@ -5,7 +5,7 @@ public class BaseUnitData : ScriptableObject
 {
     [Header("Unit Settings")]
     [Space(10)]
-    public UnitType       uniType;
+    public UnitType       unitType;
     public string         unitName;
     public UnitAttackType attackType;
     public GameObject     unitPrefab;

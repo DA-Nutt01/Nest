@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9fc699e54161241a18e02a40a9a308, type: 3}
   m_Name: Base Human Unit Data
   m_EditorClassIdentifier: 
-  uniType: 1
+  unitType: 1
   unitName: Joe
   attackType: 0
   unitPrefab: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
@@ -27,4 +27,4 @@ MonoBehaviour:
   detectionRadius: 12
   cost: 45
   squadSize: 3
-  spawnTime: 10
+  spawnTime: 45

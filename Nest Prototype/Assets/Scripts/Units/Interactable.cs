@@ -34,6 +34,7 @@ public class Interactable : MonoBehaviour
         {
             unit.GetComponent<Unit>().Defocus();
         }
+        Destroy(gameObject);
     }
 
     // When a unit focuses on this
