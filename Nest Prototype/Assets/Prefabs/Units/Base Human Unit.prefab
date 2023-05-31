@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 4340687578866921352}
   - component: {fileID: 5189922751926508023}
   - component: {fileID: 5846248681332977555}
+  - component: {fileID: 2572569309547876348}
   m_Layer: 8
   m_Name: Base Human Unit
   m_TagString: Untagged
@@ -298,6 +299,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
+--- !u!114 &2572569309547876348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049741690211191905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a229269693302942ad4c322cfe41865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit: {fileID: 0}
+  stateController: {fileID: 0}
+  currentPointIndex: 0
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 0
+  agent: {fileID: 0}
+  patrolPoints: []
 --- !u!1 &7225345885339035119
 GameObject:
   m_ObjectHideFlags: 0

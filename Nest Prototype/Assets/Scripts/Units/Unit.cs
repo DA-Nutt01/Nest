@@ -65,8 +65,12 @@ public class Unit : MonoBehaviour
         spawnTime =            data.spawnTime;
     }
 
-    public virtual void Die()
+    public void OnDestroy()
     {
+        Defocus();
+        Debug.Log($"{gameObject.name} has Died");
+        UnitSelectionManager.allUnits.Remove(this.gameObject);
+
         switch (unitType)
         {
             case (UnitType.Alien):
@@ -76,9 +80,6 @@ public class Unit : MonoBehaviour
                 break;
         }
 
-        Defocus();
-        Debug.Log($"{gameObject.name} has Died");
-        UnitSelectionManager.allUnits.Remove(this.gameObject);
         Destroy(gameObject);
     }
 
@@ -106,6 +107,7 @@ public class Unit : MonoBehaviour
             focus = null;
             StopFollowingTarget();
             isInteracting = false;
+            isAttacking = false;
         }
     }
 
@@ -130,8 +132,10 @@ public class Unit : MonoBehaviour
     }
 
     public virtual IEnumerator AttackTarget(Interactable target)
-    { 
-        while (target && Vector3.Distance(transform.position, focus.transform.position) < focus.interactionRadius)
+    {
+        
+
+        while (target != null && Vector3.Distance(transform.position, focus.transform.position) < focus.interactionRadius)
         {
             Debug.Log($"{gameObject.name} dealt {attackDamage} damage to {focus.name}");
             target.GetComponent<Health>().TakeDamage(attackDamage);
@@ -150,12 +154,19 @@ public class Unit : MonoBehaviour
         {
             case (InteractableType.Unit):
                 Debug.Log($"{gameObject.name} attacking {focus.name}");
-                StartCoroutine(AttackTarget(focus));
+                Attack();
                 break;
             case (InteractableType.Structure):
-                StartCoroutine(AttackTarget(focus));
+                Attack();
                 break;
         }
+    }
+
+    private void Attack()
+    {
+        if (isAttacking) return;
+        isAttacking = true;
+        StartCoroutine(AttackTarget(focus));
     }
 
     void OnDrawGizmosSelected()
