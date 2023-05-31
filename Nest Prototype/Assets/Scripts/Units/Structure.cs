@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Interactable))]
 public abstract class Structure : MonoBehaviour
 {
@@ -31,9 +32,10 @@ public abstract class Structure : MonoBehaviour
         InitializeChild();
     }
 
-    public virtual void InitializeData(BaseStructureData data)
+    protected virtual void InitializeData(BaseStructureData data)
     {
         structureData = data;
+
         type = data.type;
         name = data.name;
         prefab = data.prefab;

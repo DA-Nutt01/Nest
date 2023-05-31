@@ -4,53 +4,84 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Unit : MonoBehaviour
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(Interactable))]
+public abstract class Unit : MonoBehaviour
 {
     #region Global Variables
     [Header("Unit Settings"), Space(10)]
-    [Tooltip("Reference to NavMeshAgent component on this")]
-    public NavMeshAgent agent;
-    [Tooltip("Reference to Interactable component on this")]
-    public Interactable focus;
-    public UnitType unitType;
-    public UnitAttackType attackType;
-    [Space(10)]
-    public bool isInteracting = false;
-    public bool isAttacking = false;
-    [Space(20)]
 
-    [Header("Unit Stats")]
-    [Space(10)]
-    [SerializeField]
-    private BaseUnitData unitData;
-    public Health        health;
-    public int           attackDamage;
-    public float         attackRange;
-    public float         attackRate;
-    public float         patrolSpeed;
-    public float         runSpeed;
-    public float         detectionRadius;
-    public int           cost;
-    public int           squadSize;
-    public float         spawnTime;
+    [SerializeField, Tooltip("NavMeshAgent component on this")]
+    public NavMeshAgent agent;
+
+    [SerializeField, Tooltip("Interactable this unit is currently focusing on; Can only have one focus at a time")]
+    public Interactable focus;
+
+    [SerializeField, Tooltip("Type of unit this is")]
+    public UnitType unitType;
+
+    [SerializeField, Tooltip("Primary way this unit attacks"), Space(10)]
+    protected UnitAttackType attackType;
+
+    [SerializeField, Tooltip("If this is currently interacting or not")]
+    public bool isInteracting = false;
+
+    [SerializeField, Tooltip("If this is currently attacking or not")]
+    public bool isAttacking = false;
     
+    [Space(20),Header("Unit Stats"), Space(10)]
     
+    [SerializeField, Tooltip("Scriptable Object this derives data from")]
+    protected BaseUnitData unitData;
+
+    [SerializeField, Tooltip("Parent Game object units are nested under when spawned")]
+    protected GameObject parentObject;
+
+    [SerializeField, Tooltip("Health component attached to this")]
+    protected Health health;
+
+    [SerializeField, Tooltip("Amount of damage this deals each attack")]
+    public int attackDamage;
+
+    [SerializeField, Tooltip("Distance from its target this can start attacking from")]
+    public float attackRange;
+
+    [SerializeField, Tooltip("Number of times this attacks per second")]
+    public float attackRate;
+
+    [SerializeField, Tooltip("Movement speed of this while patroling or idle movement")]
+    public float patrolSpeed;
+
+    [SerializeField, Tooltip("Movement speed of this outside of patroling")]
+    public float runSpeed;
+
+    [SerializeField, Tooltip("The distance from this that other units are detected from")]
+    public float detectionRadius;
+
+    [SerializeField, Tooltip("Number of this unit spawned when spawned")]
+    public int squadSize;
+
+    [SerializeField, Tooltip("Time in seconds it takes to spawn this unit")]
+    public float spawnTime;
+
+    [SerializeField, Tooltip("Cost in resources to spawn a sqaud of this unit")]
+    public int cost;
     #endregion
 
-    private void Awake()
+    protected virtual void Awake()
     {
         InitializeUnitData(unitData);                                
     }
 
-    public void InitializeUnitData(BaseUnitData data)
+    protected virtual void InitializeUnitData(BaseUnitData data)
     {
-        agent = GetComponent<NavMeshAgent>();
-        UnitSelectionManager.allUnits.Add(this.gameObject); // Add this unit to list of all units in the game
-        Defocus();                                          // Set focus to none
-
         unitData = data;
+
+        agent = GetComponent<NavMeshAgent>();
+        UnitSelectionManager.allUnits.Add(this.gameObject); 
+           
         unitType =             data.unitType;
-        health = GetComponent<Health>();
+        health =               GetComponent<Health>();
         health.maxHealth =     data.maxHealth;
         health.currentHealth = data.currentHealth;
         attackType =           data.attackType;
@@ -63,9 +94,16 @@ public class Unit : MonoBehaviour
         cost =                 data.cost;
         squadSize =            data.squadSize;
         spawnTime =            data.spawnTime;
+
+        Defocus();
+        InitializeChild(); // Call child-specific initialization method
     }
 
-    public void OnDestroy()
+    protected abstract void InitializeChild();
+
+    public abstract void Attack();
+
+    protected virtual void OnDestroy()
     {
         Defocus();
         Debug.Log($"{gameObject.name} has Died");
@@ -84,18 +122,15 @@ public class Unit : MonoBehaviour
     }
 
     public virtual void SetFocus(Interactable newFocus)
-    {
-        // Check if this is already focused on another interactable
-        if (newFocus != focus && focus != null)
+    {   
+        if (newFocus != focus && focus != null) // Check if this is already focused on another interactable
         {
             focus.OnDefocused(transform);
         }
-        // Set the interactable as the focus for this
-        focus = newFocus;
-        // Notify focus its is selected
-        newFocus.OnFocused(transform);
-        // Start following the focus
-        StartCoroutine(FollowTarget());
+        
+        focus = newFocus;               // Set the interactable as the focus for this
+        newFocus.OnFocused(transform);  // Notify focus its is selected
+        StartCoroutine(FollowTarget()); // Start following the focus
         isInteracting = false;
     }
 
@@ -131,10 +166,8 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public virtual IEnumerator AttackTarget(Interactable target)
+    protected virtual IEnumerator AttackTarget(Interactable target)
     {
-        
-
         while (target != null && Vector3.Distance(transform.position, focus.transform.position) < focus.interactionRadius)
         {
             Debug.Log($"{gameObject.name} dealt {attackDamage} damage to {focus.name}");
@@ -162,14 +195,7 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private void Attack()
-    {
-        if (isAttacking) return;
-        isAttacking = true;
-        StartCoroutine(AttackTarget(focus));
-    }
-
-    void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);

@@ -770,7 +770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 552769810}
   m_Layer: 0
-  m_Name: Structures
+  m_Name: Human Structures
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1600,7 +1600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1783858314}
   m_Layer: 0
-  m_Name: Structures
+  m_Name: Alien Structures
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

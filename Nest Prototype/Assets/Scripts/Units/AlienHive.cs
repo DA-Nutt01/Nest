@@ -5,27 +5,27 @@ public class AlienHive : Structure
 {
     [Header("Hive Settings"), Space(10)]
 
-    [SerializeField, Tooltip("The scriptable object this derives data for initialization")]
-    private HiveData hiveData;
+    [SerializeField, Tooltip("Scriptable object this derives data from for initialization")]
+    protected HiveData hiveData;
 
-    [Tooltip("Reference to scriptable object for human unit")]
+    [Tooltip("Data for alien unit this spawns")]
     public BaseUnitData alienUnitData;
 
-    [SerializeField, Tooltip("Parent Game object units are nested under when spawned")]
-    private GameObject parentObject;
+    [SerializeField, Tooltip("Parent Game object this is nested under when spawned")]
+    protected GameObject parentObject;
 
     [Tooltip("The radius around the hive units are spawned")]
     public float spawnRadius;
 
     [SerializeField,Tooltip("The amount of biomass needed to construct this")]
-    private int cost;
+    protected int cost;
 
     [SerializeField, Tooltip("Flag signaling if this hive is currently doing a task or not")]
-    private bool isBusy = false;
+    protected bool isBusy = false;
 
     protected override void InitializeChild()
     {
-        parentObject = GameObject.Find("Alien Units");
+        parentObject = GameObject.Find("Alien Structures");
         spawnRadius = hiveData.spawnRadius;
         cost = hiveData.cost;
     }
@@ -62,7 +62,7 @@ public class AlienHive : Structure
         Debug.Log($"Units Spawned");
     }
 
-    private Vector3 FindValidSpawnPosition()
+    protected Vector3 FindValidSpawnPosition()
     {
         bool isValidPosition = false;
         Vector3 validSpawnPosition = Vector3.zero;

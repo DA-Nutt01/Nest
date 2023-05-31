@@ -98,10 +98,10 @@ GameObject:
   - component: {fileID: 3049741690211191910}
   - component: {fileID: 3049741690211191911}
   - component: {fileID: 3049741690211191908}
-  - component: {fileID: 4340687578866921352}
   - component: {fileID: 5189922751926508023}
   - component: {fileID: 5846248681332977555}
-  - component: {fileID: 2572569309547876348}
+  - component: {fileID: 353276102151401738}
+  - component: {fileID: -4489734393545126858}
   m_Layer: 8
   m_Name: Base Human Unit
   m_TagString: Untagged
@@ -243,35 +243,6 @@ MonoBehaviour:
   isFocus: 0
   focusingUnits: []
   interactableType: 0
---- !u!114 &4340687578866921352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049741690211191905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  focus: {fileID: 0}
-  unitType: 0
-  attackType: 0
-  isInteracting: 0
-  isAttacking: 0
-  unitData: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df, type: 2}
-  health: {fileID: 0}
-  attackDamage: 0
-  attackRange: 0
-  attackRate: 0
-  patrolSpeed: 0
-  runSpeed: 0
-  detectionRadius: 0
-  cost: 0
-  squadSize: 0
-  spawnTime: 0
 --- !u!114 &5189922751926508023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +270,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
---- !u!114 &2572569309547876348
+--- !u!114 &353276102151401738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049741690211191905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163f7db315ee2a541be6b531935937d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  focus: {fileID: 0}
+  unitType: 0
+  attackType: 0
+  isInteracting: 0
+  isAttacking: 0
+  unitData: {fileID: 11400000, guid: 10122cbec5ac9a74890c62960736b8df, type: 2}
+  parentObject: {fileID: 0}
+  health: {fileID: 0}
+  attackDamage: 0
+  attackRange: 0
+  attackRate: 0
+  patrolSpeed: 0
+  runSpeed: 0
+  detectionRadius: 0
+  squadSize: 0
+  spawnTime: 0
+  cost: 0
+--- !u!114 &-4489734393545126858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
