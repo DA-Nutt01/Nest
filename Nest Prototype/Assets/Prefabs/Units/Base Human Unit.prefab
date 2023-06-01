@@ -98,10 +98,9 @@ GameObject:
   - component: {fileID: 3049741690211191910}
   - component: {fileID: 3049741690211191911}
   - component: {fileID: 3049741690211191908}
-  - component: {fileID: 5189922751926508023}
   - component: {fileID: 5846248681332977555}
-  - component: {fileID: 353276102151401738}
-  - component: {fileID: -4489734393545126858}
+  - component: {fileID: 3009368942258124333}
+  - component: {fileID: 77983448802458240}
   m_Layer: 8
   m_Name: Base Human Unit
   m_TagString: Untagged
@@ -243,19 +242,6 @@ MonoBehaviour:
   isFocus: 0
   focusingUnits: []
   interactableType: 0
---- !u!114 &5189922751926508023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049741690211191905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4285c1db124d2e742ab7348a6fc20e47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeStateList: []
 --- !u!114 &5846248681332977555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +256,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 0
   currentHealth: 0
---- !u!114 &353276102151401738
+--- !u!114 &3009368942258124333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049741690211191905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95a00089836a4f043bc997f99a614cd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints: []
+--- !u!114 &77983448802458240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -300,26 +299,6 @@ MonoBehaviour:
   squadSize: 0
   spawnTime: 0
   cost: 0
---- !u!114 &-4489734393545126858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049741690211191905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a229269693302942ad4c322cfe41865, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unit: {fileID: 0}
-  stateController: {fileID: 0}
-  currentPointIndex: 0
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 0
-  agent: {fileID: 0}
-  patrolPoints: []
 --- !u!1 &7225345885339035119
 GameObject:
   m_ObjectHideFlags: 0

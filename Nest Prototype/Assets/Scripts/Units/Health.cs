@@ -37,6 +37,7 @@ public class Health : MonoBehaviour
     {
         // Handle the death logic here
         // For example, destroy the game object or disable it
+        Debug.Log($"{gameObject.name} has Died");
         DestroyImmediate(gameObject);
     }
 }

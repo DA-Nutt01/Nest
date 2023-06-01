@@ -106,7 +106,6 @@ public abstract class Unit : MonoBehaviour
     protected virtual void OnDestroy()
     {
         Defocus();
-        Debug.Log($"{gameObject.name} has Died");
         UnitSelectionManager.allUnits.Remove(this.gameObject);
 
         switch (unitType)
@@ -146,7 +145,7 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    public virtual void Move(Vector3 point, float moveSpeed)
+    public virtual void MoveTo(Vector3 point, float moveSpeed)
     {
         agent.speed = moveSpeed;
         agent.SetDestination(point);
