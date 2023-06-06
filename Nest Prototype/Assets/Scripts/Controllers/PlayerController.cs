@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
                     {
                         Unit currentUnit = unit.GetComponent<Unit>();
 
-                        currentUnit.MoveTo(hit.point, currentUnit.runSpeed);
+                        currentUnit.Move(hit.point, currentUnit.runSpeed);
                         currentUnit.Defocus();
                     }
                 }

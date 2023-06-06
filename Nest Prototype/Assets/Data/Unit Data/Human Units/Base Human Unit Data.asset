@@ -24,7 +24,7 @@ MonoBehaviour:
   attackRate: 1.5
   maxHitPoints: 75
   currentHitPoint: 75
-  patrolSpeed: 2
+  patrolSpeed: 3
   runSpeed: 7
   detectionRadius: 12
   cost: 45
