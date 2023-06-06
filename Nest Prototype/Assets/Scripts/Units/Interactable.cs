@@ -3,10 +3,14 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public float interactionRadius = 2.5f;              // The min distance a unit needs to be to interact with this
-    [SerializeField] private bool  isFocus = false;                       
-    public List<Transform>         focusingUnits = new List<Transform>(); // The units that are currently focusing on this
-    public InteractableType        interactableType;
+    [Tooltip("The min distance a unit needs to be to interact with this")]
+    public float            interactionRadius = 2.5f;              
+    [SerializeField, Tooltip("Flag to check if this is currently being focused on")] 
+    private bool            isFocus = false;    
+    [Tooltip("List of units' transform components currently focusing on this")]
+    public List<Transform>  focusingUnits = new List<Transform>(); 
+    [Tooltip("The type of interactable this is")]
+    public InteractableType interactableType;
     private void Update()
     {
         // While this is the focus of a unit...

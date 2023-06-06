@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
                 RaycastHit hit;  
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition); 
 
-                // If the ray hit an interactable///
+                // If the ray hit an interactable on the enemy mask (Unit/Strucutre)
                 if(Physics.Raycast(ray, out hit, Mathf.Infinity, enemyMask))
                 {
                     // Cache the Interactable component of that interactable
@@ -142,8 +142,10 @@ public class PlayerController : MonoBehaviour
                     // Loop through every selected unit
                     foreach (GameObject unit in UnitSelectionManager.selectedUnits)
                     {
-                        unit.GetComponent<Unit>().Move(hit.point);
-                        unit.GetComponent<Unit>().Defocus();
+                        Unit currentUnit = unit.GetComponent<Unit>();
+
+                        currentUnit.Move(hit.point, currentUnit.runSpeed);
+                        currentUnit.Defocus();
                     }
                 }
 
@@ -155,7 +157,7 @@ public class PlayerController : MonoBehaviour
             //Check for input to begin spawn
             if (Input.GetMouseButtonDown(1))
             {
-                StructureSelectionManager.Instance.selectedStructure.GetComponent<Hive>().SpawnUnits();
+                StructureSelectionManager.Instance.selectedStructure.GetComponent<AlienHive>().SpawnUnits();
             }
         }
     }

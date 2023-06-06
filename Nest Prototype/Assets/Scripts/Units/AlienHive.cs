@@ -1,34 +1,32 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Hive : Structure
+public class AlienHive : Structure
 {
-    [SerializeField,Header("Hive Settings"), Space(10)]
-    private HiveData hiveData;
-    [Tooltip("Prefab this Hive will spawn")]
-    public GameObject unitPrefab;
-    [SerializeField ,Tooltip("Parent Game object units are nested under when spawned")]
-    private GameObject parentObject;
+    [Header("Hive Settings"), Space(10)]
+
+    [SerializeField, Tooltip("Scriptable object this derives data from for initialization")]
+    protected HiveData hiveData;
+
+    [Tooltip("Data for alien unit this spawns")]
+    public BaseUnitData alienUnitData;
+
+    [SerializeField, Tooltip("Parent Game object this is nested under when spawned")]
+    protected GameObject parentObject;
+
     [Tooltip("The radius around the hive units are spawned")]
     public float spawnRadius;
+
     [SerializeField,Tooltip("The amount of biomass needed to construct this")]
-    private int cost;
-    private bool isBusy = false;
-    
-     
+    protected int cost;
 
-    void Awake()
-    {
-        InitializeStructureData();
-    }
+    [SerializeField, Tooltip("Flag signaling if this hive is currently doing a task or not")]
+    protected bool isBusy = false;
 
-    public override void InitializeStructureData()
+    protected override void InitializeChild()
     {
-        base.InitializeStructureData();
-        unitPrefab = hiveData.unitToSpawn;
-        parentObject = GameObject.Find("Human Units");
-        spawnRadius = GetComponent<Interactable>().interactionRadius;
+        parentObject = GameObject.Find("Alien Structures");
+        spawnRadius = hiveData.spawnRadius;
         cost = hiveData.cost;
     }
     public void SpawnUnits()
@@ -45,8 +43,8 @@ public class Hive : Structure
     {
         isBusy = true;
 
-        int unitsToSpawn = unitPrefab.GetComponent<Unit>().squadSize; // Cache the sqaud size of the unit
-        float spawnTime =  unitPrefab.GetComponent<Unit>().spawnTime; //Cache the spawn time of the unit
+        int unitsToSpawn = alienUnitData.squadSize; // Cache the sqaud size of the unit
+        float spawnTime =  alienUnitData.spawnTime; //Cache the spawn time of the unit
         Debug.Log($"Spawning {unitsToSpawn} units in {spawnTime} seconds");
 
         yield return new WaitForSeconds(spawnTime); // Let the unit's spawn time elapse before spawning units
@@ -57,14 +55,14 @@ public class Hive : Structure
             // Find a valid position within range of the hive to spawn a unit
             Vector3 spawnPosition = FindValidSpawnPosition();
             // Spawn the unit at that position
-            Instantiate(unitPrefab, spawnPosition, Quaternion.identity, parentObject.transform);
+            Instantiate(alienUnitData.unitPrefab, spawnPosition, Quaternion.identity, parentObject.transform);
         }
 
         isBusy = false;
         Debug.Log($"Units Spawned");
     }
 
-    private Vector3 FindValidSpawnPosition()
+    protected Vector3 FindValidSpawnPosition()
     {
         bool isValidPosition = false;
         Vector3 validSpawnPosition = Vector3.zero;

@@ -95,10 +95,11 @@ GameObject:
   - component: {fileID: 3049741690211191906}
   - component: {fileID: 3049741690211191907}
   - component: {fileID: 3049741690211191904}
-  - component: {fileID: 4340687578866921352}
   - component: {fileID: 3049741690211191908}
+  - component: {fileID: -817368934510598534}
   - component: {fileID: 3049741690211191910}
   - component: {fileID: 3049741690211191911}
+  - component: {fileID: -2650856174727252675}
   m_Layer: 6
   m_Name: Base Alien Unit
   m_TagString: Untagged
@@ -187,35 +188,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4340687578866921352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3049741690211191905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5d28f5e9fe20954d8641b3ea9e9f46f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  focus: {fileID: 0}
-  unitType: 0
-  attackType: 0
-  isInteracting: 0
-  isAttacking: 0
-  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
-  attackDamage: 0
-  attackRange: 0
-  attackRate: 0
-  maxHitPoints: 0
-  currentHitPoints: 0
-  movementSpeed: 0
-  detectionRadius: 15
-  cost: 100
-  squadSize: 5
-  spawnTime: 3
 --- !u!114 &3049741690211191908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +204,20 @@ MonoBehaviour:
   isFocus: 0
   focusingUnits: []
   interactableType: 0
+--- !u!114 &-817368934510598534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049741690211191905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e856fd205d0819d4e914ec86834442a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!195 &3049741690211191910
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -270,6 +256,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &-2650856174727252675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3049741690211191905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a771c4dbca069a646a27f26e97ae093d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  focus: {fileID: 0}
+  unitType: 0
+  attackType: 0
+  isInteracting: 0
+  isAttacking: 0
+  unitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
+  parentObject: {fileID: 0}
+  health: {fileID: 0}
+  attackDamage: 0
+  attackRange: 0
+  attackRate: 0
+  patrolSpeed: 0
+  runSpeed: 0
+  detectionRadius: 0
+  squadSize: 0
+  spawnTime: 0
+  cost: 0
 --- !u!1 &4240496641922993691
 GameObject:
   m_ObjectHideFlags: 0

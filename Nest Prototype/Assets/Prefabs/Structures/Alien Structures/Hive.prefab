@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1820459273919286788}
   - component: {fileID: 1672450145796541122}
   - component: {fileID: 5117993476226612288}
+  - component: {fileID: -4245870455524503916}
   m_Layer: 7
   m_Name: Hive
   m_TagString: Untagged
@@ -162,13 +163,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   structureData: {fileID: 11400000, guid: ad297d28aa022d74d8037549f526c89b, type: 2}
-  structureType: 1
-  structureName: Hive Mind
-  structurePrefab: {fileID: 1672450145796541145}
-  baseHitPoints: 0
-  baseArmor: 0
+  type: 1
+  name: Hive Mind
+  prefab: {fileID: 1672450145796541145}
+  maxHitPoints: 0
+  currentHitPoints: 0
+  defense: 0
   hiveData: {fileID: 11400000, guid: ad297d28aa022d74d8037549f526c89b, type: 2}
-  unitPrefab: {fileID: 3049741690211191905, guid: fc646b51f81db7349b7624ed1d82b7af,
-    type: 3}
+  alienUnitData: {fileID: 11400000, guid: 1ee78a7b86e97ad46b63d34ce707e6c5, type: 2}
+  parentObject: {fileID: 0}
+  spawnRadius: 0
   cost: 0
-  spawnRadius: 3
+  isBusy: 0
+--- !u!114 &-4245870455524503916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672450145796541145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e856fd205d0819d4e914ec86834442a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  currentHealth: 0

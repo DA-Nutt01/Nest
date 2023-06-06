@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60006af05dec4f4c96c288f8e8caade, type: 3}
   m_Name: Townhouse
   m_EditorClassIdentifier: 
-  structureType: 2
-  structureName: Town Hall
-  StructurePrefab: {fileID: 1672450145796541145, guid: 1ce99aec1499bdc498a397ee6c870bac,
-    type: 3}
-  baseHitPoints: 1000
-  baseArmor: 25
+  type: 2
+  name: Town Hall
+  prefab: {fileID: 1672450145796541145, guid: 1ce99aec1499bdc498a397ee6c870bac, type: 3}
+  maxHitPoints: 1000
+  currentHitPoints: 1000
+  defense: 20
   unitToSpawn: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
     type: 3}
   spawnRadius: 5.5

@@ -1,34 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Interactable))]
-public class Structure : MonoBehaviour
+public abstract class Structure : MonoBehaviour
 {
-    [SerializeField] private BaseStructureData structureData;
-    [Header("Structure Settings")]
-    [Space(10)]
-    public StructureType structureType;
-    public string        structureName;
-    public GameObject    structurePrefab;
-    [Space(20)]
+    [Header("Structure Settings"), Space(10)]
 
-    [Header("Structure Stats")]
-    [Space(10)]
-    public int baseHitPoints;
-    public int baseArmor;
+    [SerializeField, Tooltip("The scriptable object this derives data for initialization")]
+    protected BaseStructureData structureData;
 
+    [SerializeField, Tooltip("The type of structure this is")]
+    protected StructureType type;  
+    
+    [SerializeField, Tooltip("Name of this structure")]
+    protected new string    name;
 
-    // Start is called before the first frame update
-    void Awake()
+    [SerializeField, Tooltip("The prefab that represents this structure")]
+    protected GameObject prefab;
+
+    [Space(20), Header("Structure Stats"), Space(10)]
+
+    [SerializeField, Tooltip("Reference to Health component on this")]
+    protected Health health;
+
+    [SerializeField, Tooltip("The percentage of damage ignored from damage sources")]
+    protected int defense;
+
+    protected virtual void Awake()
     {
-        InitializeStructureData();
+        InitializeData(structureData);
+        InitializeChild();
     }
 
-    public virtual void InitializeStructureData()
+    protected virtual void InitializeData(BaseStructureData data)
     {
-        structureType = structureData.structureType;
-        baseHitPoints = structureData.baseHitPoints;
-        baseArmor =     structureData.baseArmor;
+        structureData = data;
+
+        type = data.type;
+        name = data.name;
+        prefab = data.prefab;
+
+        health = GetComponent<Health>();
+        health.maxHealth = data.maxHitPoints;
+        health.currentHealth = data.currentHitPoints;
+        defense = data.defense;
+
+        // Call child-specific initialization method
+        InitializeChild();
     }
+    protected abstract void InitializeChild();
 }
