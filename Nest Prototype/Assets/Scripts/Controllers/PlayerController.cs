@@ -17,8 +17,25 @@ public class PlayerController : MonoBehaviour
     private Rect selectionBox;
     private Vector2 boxStartPosition;
     private Vector2 boxEndPosition;
+
+
+    private static PlayerController _instance;
+    public static PlayerController  Instance {get {return _instance;}}
     #endregion
 
+    void Awake() 
+    {
+        // If an instance of this already exists and it isn't this one...
+        if(_instance != null && _instance != this)
+        {
+            // Destroy this instance (There can only be one)
+            Destroy(this.gameObject);
+        } else {
+            // Set the instance of this script to this instance
+            _instance = this;
+        }
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -280,5 +297,10 @@ public class PlayerController : MonoBehaviour
                 controlState = ControlState.UnitsSelected;
             }
         }
+    }
+
+    public ControlState GetControlState()
+    {
+        return controlState;
     }
 }
