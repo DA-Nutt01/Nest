@@ -131,21 +131,47 @@ public class PlayerController : MonoBehaviour
                     // Loop through every selected unit
                     foreach (GameObject unitObject in UnitSelectionManager.selectedUnits)
                     {
+                        // cache the Unit component on this unit
                         Unit unit = unitObject.GetComponent<Unit>();
-            
+
+                        // set the selected interactable as this unit's focus 
                         unit.SetFocus(interactable);
+
+                        // Have this unit start to follow the selected interactable
                         unit.FollowTarget();                        
                     }
                 }
-                else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementMask))
+                else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementMask)) // If the ray hits the ground and no other interactable
                 {
+                    // Cache the world position of the point the ray hit, ie the position to move selected units
+                    Vector3 targetPosition = hit.point;
+
+                    // Create a list of valid positions for the selected point
+                    List<Vector3> targetPositionList = GetPositionListAroundPoint(targetPosition, 2f, 5);
+
+                    // Create an indexer for selecting a sub position for each unit
+                    int targetPositionListIndex = 0;
+
+                    if (UnitSelectionManager.selectedUnits.Count == 1)
+                    {
+                        Unit currentUnit = UnitSelectionManager.selectedUnits[0].GetComponent<Unit>(); // Cache the unit component of this unit
+                        currentUnit.Move(targetPosition, currentUnit.runSpeed);
+                        currentUnit.Defocus();
+                        return;
+                    }
+
                     // Loop through every selected unit
                     foreach (GameObject unit in UnitSelectionManager.selectedUnits)
                     {
-                        Unit currentUnit = unit.GetComponent<Unit>();
+                        Unit currentUnit = unit.GetComponent<Unit>(); // Cache the unit component of this unit
 
-                        currentUnit.Move(hit.point, currentUnit.runSpeed);
-                        currentUnit.Defocus();
+                        // Move this unit to one of the sub postiions in the position list at their run speed
+                        currentUnit.Move(targetPositionList[targetPositionListIndex], currentUnit.runSpeed); 
+
+                        // Increment the list indexer for the next unit
+                        targetPositionListIndex = (targetPositionListIndex + 1) % targetPositionList.Count;
+
+                        currentUnit.Defocus(); // Defocus this unit since it is no longer focused on an interactable
                     }
                 }
 
@@ -160,6 +186,42 @@ public class PlayerController : MonoBehaviour
                 StructureSelectionManager.Instance.selectedStructure.GetComponent<AlienHive>().SpawnUnits();
             }
         }
+    }
+
+    private List<Vector3> GetPositionListAroundPoint(Vector3 startPosition, float distance, int positionCount)
+    {
+        /// <summary>
+        /// Generates a list of positions arranged evenly around a specified point in 3D space.
+        /// </summary>
+        /// <param name="startPosition">The center point around which positions are arranged.</param>
+        /// <param name="distance">The distance from the start position to each generated position.</param>
+        /// <param name="positionCount">The number of positions to generate around the start position.</param>
+        /// <returns>A list of Vector3 positions evenly distributed around the start position.</returns>
+
+        List<Vector3> positionList = new List<Vector3>(); // Create a new list to store all valid positions
+
+        for (int i = 0; i < positionCount; i++)
+        {
+            float angle = i * (360f / positionCount); // Calculate the angle for each position
+            Vector3 dir = Quaternion.AngleAxis(angle, Vector3.up) * Vector3.forward; // Get the direction vector for this angle in 3D
+            Vector3 position = startPosition + dir * distance; // Calculate the position based on direction and distance
+            positionList.Add(position); // Add the calculated position to the list
+        }
+
+        return positionList; // Return the list of positions
+    }
+
+
+    private Vector3 ApplyRotationToVector(Vector3 vec, float angle)
+    {
+        /// <summary>
+        /// Applies a 2D rotation to a vector around the z-axis by the specified angle.
+        /// </summary>
+        /// <param name="vec">The vector to rotate.</param>
+        /// <param name="angle">The angle in degrees by which to rotate the vector around the z-axis.</param>
+        /// <returns>The rotated vector.</returns>
+
+        return Quaternion.Euler(0, 0, angle) * vec;
     }
 
     // Draws visual box graphic on screen while dragging

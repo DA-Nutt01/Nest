@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator))]
 public class UnitAnimationController : MonoBehaviour
@@ -9,25 +10,22 @@ public class UnitAnimationController : MonoBehaviour
     [Header("Settings"), Space(10)]
 
     private Animator animator;
-    private Rigidbody rb;
+    private NavMeshAgent agent;
     #endregion
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
     {
-        if (rb.velocity.magnitude > 0.1f)
+        if (agent.hasPath && agent.velocity.sqrMagnitude > 0.1f)
         {
-            // Unit is moving
             animator.SetBool("isRunning", true);
-        }
-        else
-        {
-            // Unit is not moving
+        } else 
+        {  
             animator.SetBool("isRunning", false);
         }
     }

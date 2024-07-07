@@ -7,6 +7,7 @@ public class AlienUnit : Unit
 
     [SerializeField, Tooltip("A reference to this unit's selected graphic when being selected by the controller")]
     public GameObject selectionGFX;
+
     protected override void InitializeChild()
     {
         parentObject = GameObject.Find("Alien Units");
