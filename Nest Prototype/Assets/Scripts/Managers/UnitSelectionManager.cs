@@ -5,7 +5,9 @@ public class UnitSelectionManager : MonoBehaviour
 {
     
     public static List<GameObject>      allUnits = new List<GameObject>();      // List of all units in the scene
-    public static List<GameObject>      selectedUnits = new List<GameObject>(); // List of all units in the scene currently selected
+    public static List<GameObject>      selectedUnits = new List<GameObject>(); // List of all alien units in the scene currently selected
+    public static List<GameObject>      alienUnits = new List<GameObject>(); // List of all alien units currently in the scene
+    public static List<GameObject>      humanUnits = new List<GameObject>(); // List of all human units currently in the scene
     private static UnitSelectionManager _instance;
     public static UnitSelectionManager  Instance {get {return _instance;}}
 
@@ -28,7 +30,7 @@ public class UnitSelectionManager : MonoBehaviour
         DeselectAll();
         // Add this unit to selection list
         selectedUnits.Add(unitToAdd);
-        ToggleSelectionGFX(unitToAdd);
+        unitToAdd.GetComponent<AlienUnit>().ToggleSelectionGFX();
     }
 
     public void ShiftClickSelect(GameObject unitToAdd)
@@ -38,7 +40,7 @@ public class UnitSelectionManager : MonoBehaviour
         {
             // Add this unit to selection list
             selectedUnits.Add(unitToAdd);
-            ToggleSelectionGFX(unitToAdd);
+            unitToAdd.GetComponent<AlienUnit>().ToggleSelectionGFX();
         } else // This unit already is currently selected
         {
             // Remove unit from selection list
@@ -54,7 +56,7 @@ public class UnitSelectionManager : MonoBehaviour
             // Add the unit to selection list
             selectedUnits.Add(unitToAdd);
             // Toggle unit selection GFX
-            ToggleSelectionGFX(unitToAdd);
+            unitToAdd.GetComponent<AlienUnit>().ToggleSelectionGFX();
         }
     }
 
@@ -62,30 +64,17 @@ public class UnitSelectionManager : MonoBehaviour
     {
         // Clear the list of all units
         selectedUnits.Clear();
+
         // Toggle off all selection GFX
-        foreach (GameObject unit in allUnits)
+        foreach (GameObject unit in alienUnits) 
         {
-            ToggleSelectionGFX(unit);
+            unit.GetComponent<AlienUnit>().ToggleSelectionGFX();
         }
     }
 
     public void DeselectUnit(GameObject unitToDeselect)
     {
         
-    }
-
-    public void ToggleSelectionGFX(GameObject unit)
-    {
-        // If this unit is currently selected...
-        if(selectedUnits.Contains(unit))
-        {
-            // Toggle selection GFX on
-            unit.transform.GetChild(0).gameObject.SetActive(true);
-        } else // This unit is not currently selected
-        {
-            // Toggle selection GFX off
-            unit.transform.GetChild(0).gameObject.SetActive(false);
-        }
     }
 
 }

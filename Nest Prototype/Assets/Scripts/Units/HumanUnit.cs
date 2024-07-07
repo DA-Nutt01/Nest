@@ -7,6 +7,7 @@ public class HumanUnit : Unit
     protected override void InitializeChild()
     {
         parentObject = GameObject.Find("Human Units");
+        UnitSelectionManager.humanUnits.Add(this.gameObject);
     }
 
     public override void Attack()

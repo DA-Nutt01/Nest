@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,7 +11,7 @@ public abstract class Unit : MonoBehaviour
     #region Global Variables
     [Header("Unit Settings"), Space(10)]
 
-    [SerializeField, Tooltip("NavMeshAgent component on this")]
+    [SerializeField, Tooltip("NavMeshAgent component on thi  s")]
     public NavMeshAgent agent;
 
     [SerializeField, Tooltip("Interactable this unit is currently focusing on; Can only have one focus at a time")]
@@ -66,6 +66,7 @@ public abstract class Unit : MonoBehaviour
 
     [SerializeField, Tooltip("Cost in resources to spawn a sqaud of this unit")]
     public int cost;
+
     #endregion
 
     protected virtual void Awake()
@@ -113,8 +114,10 @@ public abstract class Unit : MonoBehaviour
         {
             case (UnitType.Alien):
                 UnitSelectionManager.selectedUnits.Remove(this.gameObject);
+                UnitSelectionManager.alienUnits.Remove(this.gameObject);
                 break;
             case (UnitType.Human):
+                UnitSelectionManager.humanUnits.Remove(this.gameObject);
                 break;
         }
 

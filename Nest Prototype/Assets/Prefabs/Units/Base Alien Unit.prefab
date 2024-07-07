@@ -270,6 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   focus: {fileID: 0}
+  selectionGFX: {fileID: 4240496641922993691}
   unitType: 0
   attackType: 0
   isInteracting: 0
