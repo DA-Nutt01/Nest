@@ -15,18 +15,18 @@ MonoBehaviour:
   unitType: 1
   unitName: Joe
   attackType: 0
-  unitPrefab: {fileID: 3049741690211191905, guid: 1ec48998738f97146a0d6a8f037ddb3b,
+  unitPrefab: {fileID: 1278032866729440877, guid: 4810b4ee0e81e2a4dbcd7d54cf50ace0,
     type: 3}
   maxHealth: 75
   currentHealth: 75
-  atackDamage: 5
+  attackDamage: 5
   attackRange: 1
   attackRate: 1.5
   maxHitPoints: 75
   currentHitPoint: 75
-  patrolSpeed: 3
-  runSpeed: 7
+  patrolSpeed: 5
+  runSpeed: 8
   detectionRadius: 12
   cost: 45
-  squadSize: 3
+  squadSize: 2
   spawnTime: 45

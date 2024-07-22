@@ -24,11 +24,11 @@ public class PatrolState : BaseState
     {
         base.Awake();
         // Hardcoding some random patrol points for now
-        patrolPoints.Add(new Vector3(Random.Range(-125, 125), gameObject.transform.position.y, Random.Range(-125, 125)));
-        patrolPoints.Add(new Vector3(Random.Range(-125, 125), gameObject.transform.position.y, Random.Range(-125, 125)));
+        patrolPoints.Add(new Vector3(Random.Range(0, 20), gameObject.transform.position.y, Random.Range(0, 20)));
+        patrolPoints.Add(new Vector3(Random.Range(0, 20), gameObject.transform.position.y, Random.Range(0, 20)));
         currentPointIndex = 0;
         agent = unit.agent;
-        agent.stoppingDistance = 0f;
+        //agent.stoppingDistance = 0f;
 
         // Check what type of unit this is to determine what layers define as enemy layers
         switch (unit.unitType)
@@ -43,30 +43,26 @@ public class PatrolState : BaseState
     }
 
     public override void EnterState()
-    {
-        Debug.Log("Entering Patrol State");
-        
+    {        
         StartCoroutine(UpdateState());
     }
 
     public override void ExitState()
     {
-        Debug.Log("Exiting Patrol State");
-        unit.agent.stoppingDistance = 1.5f;
+        //unit.agent.stoppingDistance = 1.5f;
         StopAllCoroutines();
-        stateController.RemoveState <PatrolState>();
+        //stateController.RemoveState <PatrolState>();
     }
 
     public override IEnumerator UpdateState()
     {
-        Debug.Log("Patrolling...");
-
         while (true)
         {
             if (agent != null)
             {
                 // Constantly cache any player unit enters this unit's detection radius
                 Collider[] detectedPlayerUnits = Physics.OverlapSphere(transform.position, unit.detectionRadius, enemyMask);
+
                 // Move towards the current patrol point
                 Vector3 targetPosition = patrolPoints.ToArray()[currentPointIndex];
                 unit.Move(targetPosition, unit.patrolSpeed);
@@ -74,21 +70,37 @@ public class PatrolState : BaseState
                 // Check if the unit has reached the patrol point
                  if (Vector3.Distance(unit.transform.position, targetPosition) < 0.1f)
                  {
+                    // Wait a few moments before moving to next patrol point
+                    yield return new WaitForSeconds(5);
+
                     // Move to the next patrol point
-                    Debug.Log("Reach Waypoint");
                      currentPointIndex++;
-                     if (currentPointIndex >= patrolPoints.Count)
-                         currentPointIndex = 0; 
+                     if (currentPointIndex >= patrolPoints.Count) 
+                     {
+                        currentPointIndex = 0; 
+                     }
                  }
                  
                  if (detectedPlayerUnits.Length >= 1 && unit.focus == null)
                 {
                     unit.SetFocus(detectedPlayerUnits[0].GetComponent<Interactable>());
-                    ExitState();
-                    Destroy(this);
+                    yield return StartCoroutine(unit.FollowTarget());
+                    unit.Interact();
+                    //ExitState();
+                    //Destroy(this);
                 }
             }
             yield return null;
         }
+    }
+
+    protected virtual void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.blue; // Set Gizmo color to red
+        foreach (Vector3 patrolPoint in patrolPoints)
+        {
+            Gizmos.DrawWireSphere(patrolPoint, 1f); // Draw wire sphere at the unit's position with the detection radius
+        }
+        
     }
 }

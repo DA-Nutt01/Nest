@@ -158,13 +158,14 @@ public class PlayerController : MonoBehaviour
                         unit.FollowTarget();                        
                     }
                 }
+                
                 else if(Physics.Raycast(ray, out hit, Mathf.Infinity, movementMask)) // If the ray hits the ground and no other interactable
                 {
                     // Cache the world position of the point the ray hit, ie the position to move selected units
                     Vector3 targetPosition = hit.point;
 
                     // Create a list of valid positions for the selected point
-                    List<Vector3> targetPositionList = GetPositionListAroundPoint(targetPosition, 2f, 5);
+                    List<Vector3> targetPositionList = GetPositionAround(targetPosition, new float[] {4f, 8f, 12f}, new int[] {5, 10, 15});
 
                     // Create an indexer for selecting a sub position for each unit
                     int targetPositionListIndex = 0;
@@ -203,6 +204,35 @@ public class PlayerController : MonoBehaviour
                 StructureSelectionManager.Instance.selectedStructure.GetComponent<AlienHive>().SpawnUnits();
             }
         }
+    }
+
+    
+    private List<Vector3> GetPositionAround(Vector3 startPosition, float[] ringDistanceArray, int[] ringPositionCountArray)
+    {
+        /// <summary>
+        /// Generates a list of positions arranged in concentric rings around a specified point in 3D space.
+        /// </summary>
+        /// <param name="startPosition">The center point around which positions are arranged.</param>
+        /// <param name="ringDistanceArray">An array of distances for each ring from the start position.</param>
+        /// <param name="ringPositionCountArray">An array specifying the number of positions to generate in each ring.</param>
+        /// <returns>A list of Vector3 positions arranged in concentric rings around the start position.</returns>
+
+        // Create a new list to store all valid positions
+        List<Vector3> positionList = new List<Vector3>();
+        
+        // Add the start position to the list
+        positionList.Add(startPosition);
+
+        // Loop through each ring distance and position count
+        for (int i = 0; i < ringDistanceArray.Length; i++)
+        {
+            // Generate positions around the start position for the current ring
+            // and add them to the position list
+            positionList.AddRange(GetPositionListAroundPoint(startPosition, ringDistanceArray[i], ringPositionCountArray[i]));
+        }
+
+        // Return the list of positions
+        return positionList;
     }
 
     private List<Vector3> GetPositionListAroundPoint(Vector3 startPosition, float distance, int positionCount)

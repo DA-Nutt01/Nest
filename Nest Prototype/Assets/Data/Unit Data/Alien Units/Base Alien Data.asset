@@ -17,8 +17,8 @@ MonoBehaviour:
   attackType: 0
   unitPrefab: {fileID: 3049741690211191905, guid: fc646b51f81db7349b7624ed1d82b7af,
     type: 3}
-  maxHealth: 75
-  currentHealth: 75
+  maxHealth: 25
+  currentHealth: 25
   atackDamage: 5
   attackRange: 1
   attackRate: 2

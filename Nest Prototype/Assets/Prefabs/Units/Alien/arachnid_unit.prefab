@@ -2285,7 +2285,6 @@ GameObject:
   - component: {fileID: 3524917610587365202}
   - component: {fileID: 3524917610587365230}
   - component: {fileID: 3524917610587365231}
-  - component: {fileID: 3524917610587365228}
   m_Layer: 6
   m_Name: arachnid_unit
   m_TagString: Untagged
@@ -2302,8 +2301,8 @@ Transform:
   m_GameObject: {fileID: 3524917610587234691}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
   m_LocalPosition: {x: -14.422977, y: -0.0000023841858, z: 9.312695}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3524917610799335047}
   - {fileID: 3524917610587397673}
@@ -2340,7 +2339,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3524917610587234691}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.8
+  m_Radius: 1.1
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -2439,22 +2438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c290fc84e3e6c4a927e7bfb5329e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &3524917610587365228
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3524917610587234691}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &3524917610587235637
 GameObject:
   m_ObjectHideFlags: 0

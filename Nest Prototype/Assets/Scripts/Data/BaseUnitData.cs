@@ -16,7 +16,7 @@ public class BaseUnitData : ScriptableObject
     [Tooltip("Reference to health component on this unit")]
     public int    maxHealth;
     public int    currentHealth;
-    public int    atackDamage;
+    public int    attackDamage;
     public float  attackRange;
     [Tooltip("The number of attacks per second")]
     public float  attackRate;
